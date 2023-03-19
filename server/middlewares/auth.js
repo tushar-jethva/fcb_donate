@@ -1,0 +1,21 @@
+const User = require('../models/auth');
+const jwt = require('jsonwebtoken');
+
+const Auth = async(req,res,next)=>{
+
+    const token = req.header("x-auth-token");
+    if(!token){
+        return res.status(400).json({msg:"No valid token!"});
+    }
+
+    const verify = jwt.verify(token,"SECRETKEY");
+    if(!verify){
+        return res.status(400).json({msg:"Token verification failed!"});
+    }
+
+    req.id = verify.id;
+    req.token = token;
+    next();
+}
+
+module.exports = Auth;
