@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const PORT = 3000;
 const DB = "mongodb+srv://tushar_023:JETHvA%409999@ncbdonate.2gwhl0z.mongodb.net/test";
 
+const authRouter = require('./routes/auth');
+
 const app = express();
+app.use(express.json());
+app.use(authRouter);
 
 mongoose.
 connect(DB).
@@ -17,6 +21,6 @@ catch((e)=>{
 
 
 
-app.listen(PORT,()=>{
+app.listen(PORT,"0.0.0.0",()=>{
     console.log(`You are connected at http://localhost:${PORT}`);
 })
