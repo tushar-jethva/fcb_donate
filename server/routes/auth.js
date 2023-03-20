@@ -10,7 +10,6 @@ const authRouter = express.Router();
 authRouter.post('/api/auth/signUp',async(req,res)=>{
 
     try{
-
         const{name,email,password} = req.body;
         const existUser = await User.findOne({email});
         if(existUser){
@@ -30,7 +29,6 @@ authRouter.post('/api/auth/signUp',async(req,res)=>{
     catch(e){
         res.status(500).json({error:e.message});
     }
-
 });
 
 authRouter.post('/api/auth/signIn',async(req,res)=>{
@@ -61,12 +59,10 @@ authRouter.get('/api/isValidToken',async(req,res)=>{
         if(!token){
             return res.json(false);
         }
-    
         const verify = jwt.verify(token,"SECRETKEY");
         if(!verify){
             return res.json(false);
         }
-    
         const user = await User.findById(verify.id);
         if(!user){
             return res.json(false);

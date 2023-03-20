@@ -9,7 +9,9 @@ const authRouter = require('./routes/auth');
 const app = express();
 app.use(express.json());
 app.use(authRouter);
-
+app.get("/fake",(req,res) => {
+    res.json({'name':'vipendrasinh'});
+})
 mongoose.
 connect(DB).
 then(()=>{
