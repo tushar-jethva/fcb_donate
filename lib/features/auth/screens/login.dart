@@ -1,17 +1,41 @@
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
-import 'package:fcb_donate/features/auth/widgets/costom_textfield.dart';
+import 'package:fcb_donate/features/auth/services/auth_services.dart';
+import 'package:fcb_donate/common/costom_textfield.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants/colors.dart';
 import '../../../utils/button.dart';
 
-class Login extends StatelessWidget {
+// ignore: must_be_immutable
+class Login extends StatefulWidget {
   static const routeName = "/login";
   Login({super.key});
-  TextEditingController _emailController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
-  GlobalKey _loginkey = GlobalKey<FormState>();
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _loginkey = GlobalKey<FormState>();
+
+  AuthServices authServices = AuthServices();
+
+  bool isLogin = false;
+
+  void loginUser(String email, String password) async {
+    setState(() {
+      isLogin = true;
+    });
+    await authServices.signInUser(
+        email: email, password: password, context: context);
+    setState(() {
+      isLogin = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -95,13 +119,25 @@ class Login extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        CustomButton(
-                          widget: const Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap: () {
+                            if (_loginkey.currentState!.validate()) {
+                              loginUser(_emailController.text,
+                                  _passwordController.text);
+                            }
+                          },
+                          child: CustomButton(
+                            widget: isLogin
+                                ? const CircularProgressIndicator(
+                                    color: Colors.red,
+                                  )
+                                : const Text(
+                                    "Login",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                           ),
                         ),
                         const SizedBox(

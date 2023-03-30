@@ -8,9 +8,9 @@ class User {
   final String name;
   final String id;
   final String token;
-  final num mobile_no;
+  final String mobile_no;
   final String email;
-  final num mobile_alt_no;
+  final String mobile_alt_no;
   final String address;
   final String type;
   User({
@@ -39,14 +39,14 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      name: map['name'] as String,
-      id: map['id'] as String,
-      token: map['token'] as String,
-      mobile_no: map['mobile_no'] as num,
-      email: map['email'] as String,
-      mobile_alt_no: map['mobile_alt_no'] as num,
-      address: map['address'] as String,
-      type: map['type'] as String,
+      name: map['name'] ?? '',
+      id: map['_id'] ?? '',
+      token: map['token'] ?? '',
+      mobile_no: map['mobile_no'] ?? "",
+      email: map['email'] ?? '',
+      mobile_alt_no: map['mobile_alt_no'] ?? "",
+      address: map['address'] ?? '',
+      type: map['type'] ?? '',
     );
   }
 

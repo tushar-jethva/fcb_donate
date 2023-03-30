@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
   String hintText;
   bool isPass;
@@ -21,7 +22,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return widget.isPass
-        ? TextField(
+        ? TextFormField(
+            validator: (val) {
+              if (val!.isEmpty || val == null) {
+                return 'Enter your ${widget.hintText}';
+              }
+            },
             controller: widget.controller,
             obscureText: isShow,
             decoration: InputDecoration(
@@ -42,7 +48,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
                 hintStyle: const TextStyle(fontSize: 14, color: Colors.black)),
           )
-        : TextField(
+        : TextFormField(
+            validator: (val) {
+              if (val!.isEmpty || val == null) {
+                return 'Enter your ${widget.hintText}';
+              }
+            },
             controller: widget.controller,
             obscureText: false,
             decoration: InputDecoration(

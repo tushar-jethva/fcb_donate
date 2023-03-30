@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const Auth = async(req,res,next)=>{
 
     const token = req.header("x-auth-token");
+    // console.log(token);
     if(!token){
         return res.status(400).json({msg:"No valid token!"});
     }

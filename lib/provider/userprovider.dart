@@ -7,9 +7,9 @@ class UserProvider with ChangeNotifier {
       name: '',
       id: '',
       token: '',
-      mobile_no: -1,
+      mobile_no: "",
       email: '',
-      mobile_alt_no: -1,
+      mobile_alt_no: "",
       address: '',
       type: '');
   User get user => _user;

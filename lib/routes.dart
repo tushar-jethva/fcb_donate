@@ -1,4 +1,5 @@
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
+import 'package:fcb_donate/features/user/screens/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'features/auth/screens/login.dart';
@@ -11,7 +12,11 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
 
     case SignUp.routeName:
       return MaterialPageRoute(
-          builder: (_) => SignUp(), settings: routeSettings);
+          builder: (_) => const SignUp(), settings: routeSettings);
+
+     case BottomNavBar.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const BottomNavBar(), settings: routeSettings);
     default:
       return MaterialPageRoute(
         settings: routeSettings,

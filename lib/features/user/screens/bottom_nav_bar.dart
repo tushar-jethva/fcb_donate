@@ -1,26 +1,24 @@
+import 'package:fcb_donate/features/user/screens/feed_screen.dart';
+import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class BottomNavBar extends StatefulWidget {
+  static const routeName = '-bottombar';
+  const BottomNavBar({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _BottomNavBarState extends State<BottomNavBar> {
+  int currentIndex = 0;
   List pages = [
-    const Center(
-      child: Text("Home Screen"),
-    ),
-    const Center(
-      child: Text("Request Screen"),
-    ),
+    const ProfileScreen(),
+    const FeedScreen(),
     const Center(
       child: Text("Profile Screen"),
     )
   ];
-
-  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "")
         ],
       ),

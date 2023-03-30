@@ -3,10 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-String url = "http://192.168.242.230:3000";
+String url = "http://192.168.132.230:3000";
 
-showSnackbar(BuildContext context, String data) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data)));
+class GlobalSnakbar {
+  static GlobalKey<ScaffoldMessengerState> key =
+      GlobalKey<ScaffoldMessengerState>();
+  showSnackbar(String data) {
+    key.currentState!
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(data)));
+  }
 }
 
 httpErrorHandling(
@@ -18,13 +24,47 @@ httpErrorHandling(
       onSuccess();
       break;
     case 400:
-      showSnackbar(context, jsonDecode(res.body)['message']);
+      GlobalSnakbar().showSnackbar(jsonDecode(res.body)['msg']);
       break;
     case 500:
-      showSnackbar(context, jsonDecode(res.body)['error']);
+      GlobalSnakbar().showSnackbar(jsonDecode(res.body)['error']);
       break;
 
     default:
-      showSnackbar(context, jsonDecode(res.body));
+      GlobalSnakbar().showSnackbar(jsonDecode(res.body));
   }
 }
+
+List images = [
+{
+  'name':"Bhavnagar Ngo",
+  'image':"https://img.freepik.com/free-vector/logo-made-with-wavy-human-silhouettes_1025-394.jpg",
+  'location':"bhavnagar",
+  
+},
+{
+  'name':"Akshay patra",
+  'image':"https://www.shutterstock.com/image-vector/ngo-logo-symbol-design-template-260nw-1618830400.jpg",
+  'location':"bhavnagar",
+  
+},
+{
+  'name':"Life Ngo",
+  'image':"https://img.freepik.com/free-vector/gradient-culture-logo-template_52683-100258.jpg?w=2000",
+  'location':"bhavnagar",
+  
+},
+{
+  'name':"Grow Ngo",
+  'image':"https://www.shutterstock.com/image-vector/ngo-logo-children-foundation-organization-260nw-1516420154.jpg",
+  'location':"bhavnagar",
+  
+},
+{
+  'name':"Human Ngo",
+  'image': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSixxLdbDR10cUyWmcgJQOhQi5rujqCGKuFmA&usqp=CAU",
+  'location':"bhavnagar",
+  
+}
+
+];
