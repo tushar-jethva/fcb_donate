@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-String url = "http://192.168.132.230:3000";
+String url = "http://192.168.96.230:3000";
 
 class GlobalSnakbar {
   static GlobalKey<ScaffoldMessengerState> key =

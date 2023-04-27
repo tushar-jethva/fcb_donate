@@ -1,13 +1,10 @@
 import 'dart:convert';
-
+import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
-import 'package:fcb_donate/features/user/screens/bottom_nav_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../constants/all_constant.dart';
 import '../../../models/user.dart';
 
@@ -18,12 +15,13 @@ class AuthServices {
       required String name,
       required BuildContext context}) async {
     try {
-      http.Response res = await http.post(Uri.parse('$url/api/auth/signUp'),
-          body:
-              jsonEncode({'name': name, 'email': email, 'password': password}),
-          headers: <String, String>{
-            'Content-Type': 'application/json;charset=UTF-8',
-          });
+      http.Response res = await http.post(
+        Uri.parse('$url/api/auth/signUp'),
+        body: jsonEncode({'name': name, 'email': email, 'password': password}),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+      );
 
       // ignore: use_build_context_synchronously
       httpErrorHandling(
@@ -33,7 +31,7 @@ class AuthServices {
             GlobalSnakbar().showSnackbar("Sign up Successfully");
           });
     } catch (e) {
-       GlobalSnakbar().showSnackbar(e.toString());
+      GlobalSnakbar().showSnackbar(e.toString());
     }
   }
 
@@ -48,21 +46,22 @@ class AuthServices {
 
       // ignore: use_build_context_synchronously
       httpErrorHandling(
-          res: res,
-          context: context,
-          onSuccess: () async {
-            SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setString('x-auth-token', jsonDecode(res.body)['token']);
-            var userProvider =
-                // ignore: use_build_context_synchronously
-                Provider.of<UserProvider>(context, listen: false);
-            userProvider.setUser(User.fromMap(jsonDecode(res.body)));
-            // ignore: use_build_context_synchronously
-            Navigator.pushNamedAndRemoveUntil(
-                context, BottomNavBar.routeName, (route) => false);
-          });
+        res: res,
+        context: context,
+        onSuccess: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString('x-auth-token', jsonDecode(res.body)['token']);
+          var userProvider =
+              // ignore: use_build_context_synchronously
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(User.fromMap(jsonDecode(res.body)));
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamedAndRemoveUntil(
+              context, HomeScreen.routeName, (route) => false);
+        },
+      );
     } catch (e) {
-        GlobalSnakbar().showSnackbar(e.toString());
+      GlobalSnakbar().showSnackbar(e.toString());
     }
   }
 
@@ -74,22 +73,26 @@ class AuthServices {
       if (token == null) {
         pref.setString('x-auth-token', "");
       }
-      http.Response res = await http.get(Uri.parse("$url/api/isValidToken"),
-          headers: {
-            'x-auth-token': token!,
-            'Content-Type': 'application/json;charset=UTF-8'
-          });
+      http.Response res = await http.get(
+        Uri.parse("$url/api/isValidToken"),
+        headers: {
+          'x-auth-token': token!,
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+      );
       // ignore: use_build_context_synchronously
       httpErrorHandling(
           res: res,
           context: context,
           onSuccess: () async {
             if (jsonDecode(res.body) == true) {
-              http.Response userRes = await http
-                  .get(Uri.parse("$url/api/getUserData"), headers: {
-                'x-auth-token': token,
-                'Content-Type': 'application/json;charset=UTF-8'
-              });
+              http.Response userRes = await http.get(
+                Uri.parse("$url/api/getUserData"),
+                headers: {
+                  'x-auth-token': token,
+                  'Content-Type': 'application/json;charset=UTF-8'
+                },
+              );
               var userProvider =
 
                   // ignore: use_build_context_synchronously
@@ -99,7 +102,7 @@ class AuthServices {
             }
           });
     } catch (e) {
-        GlobalSnakbar().showSnackbar(e.toString());
+      GlobalSnakbar().showSnackbar(e.toString());
     }
   }
 }

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
+  int? lines;
   String hintText;
   bool isPass;
   TextEditingController controller;
   CustomTextField({
     Key? key,
     required this.hintText,
+    this.lines=1,
     this.isPass = false,
     required this.controller,
   }) : super(key: key);
@@ -49,6 +51,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 hintStyle: const TextStyle(fontSize: 14, color: Colors.black)),
           )
         : TextFormField(
+          maxLines: widget.lines,
             validator: (val) {
               if (val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';

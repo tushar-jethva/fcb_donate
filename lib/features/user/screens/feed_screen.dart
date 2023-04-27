@@ -17,6 +17,8 @@ class _FeedScreenState extends State<FeedScreen> {
         appBar: PreferredSize(
           preferredSize: const Size(double.infinity, 120),
           child: Container(
+            height: 150,
+            width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -25,22 +27,30 @@ class _FeedScreenState extends State<FeedScreen> {
                 ],
               ),
             ),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    "NGO",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 20),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
-        body: SafeArea(
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 200,
-                  width: 300,
-                  child: FeedCard(
-                    image: images[index]['image'],
-                    name: images[index]['name'],
-                  ),
-                );
-              }),
-        ));
+        body: const SafeArea(child: FeedCard()));
   }
 }

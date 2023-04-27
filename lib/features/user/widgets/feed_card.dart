@@ -1,60 +1,79 @@
+import 'package:fcb_donate/features/user/screens/ngo_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants/all_constant.dart';
+
 class FeedCard extends StatelessWidget {
-  String image;
-  String name;
-  FeedCard({super.key, required this.image, required this.name});
+  const FeedCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 200,
-          width: 300,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Stack(
-            children: [
-              Image.network(
-                image,
-                fit: BoxFit.contain,
-                width: 300,
-              ),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  height: 20,
-                  width: 40,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                  child: const Text(
-                    "Donate",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: 400,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: images.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, NgoScreen.routeName, arguments: {
+                'name': images[index]['name'],
+                'image': images[index]['image'],
+                'location': images[index]['location']
+              });
+            },
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8).copyWith(top: 10),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: size.height * 0.40,
+                        width: size.width * 0.50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(images[index]['image']),
+                          ),
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                bottom: 0,
-                child: Container(
-                  height: 20,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
-                    name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
+                  Container(
+                    height: 60,
+                    width: size.width * 0.50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade400,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Name:${images[index]['name']}',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            "Location: ${images[index]['location']}",
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ]),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
