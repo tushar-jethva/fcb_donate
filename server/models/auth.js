@@ -25,6 +25,10 @@ const UserModel = mongoose.Schema({
         required:true,
         type: String,
     },
+    id:{
+        requred:true,
+        type:String
+    },
     mobile_no:{
         default:"",
         type:String,
@@ -37,6 +41,25 @@ const UserModel = mongoose.Schema({
         default:"",
         type:String,
     },
+     profilePic:{
+        default:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png",
+        type:String,
+    },
+    totalDonation:{
+        default:0,
+        type:Number,
+        integer:true
+    },
+    accepted:{
+        default:0,
+        type:Number,
+        integer:true
+    }, declined:{
+        default:0,
+        type:Number,
+        integer:true
+    },
+    
     type:{
         default:"user",
         type:String,

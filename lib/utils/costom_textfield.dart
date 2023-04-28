@@ -10,7 +10,7 @@ class CustomTextField extends StatefulWidget {
   CustomTextField({
     Key? key,
     required this.hintText,
-    this.lines=1,
+    this.lines = 1,
     this.isPass = false,
     required this.controller,
   }) : super(key: key);
@@ -25,6 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return widget.isPass
         ? TextFormField(
+            style: TextStyle(color: Colors.black),
             validator: (val) {
               if (val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';
@@ -51,7 +52,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 hintStyle: const TextStyle(fontSize: 14, color: Colors.black)),
           )
         : TextFormField(
-          maxLines: widget.lines,
+            style: TextStyle(color: Colors.black),
+            maxLines: widget.lines,
             validator: (val) {
               if (val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';

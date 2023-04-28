@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class MyContainerImage extends StatelessWidget {
-  final Icon icon;
-  const MyContainerImage({super.key, required this.icon});
+  final Widget widget;
+  const MyContainerImage({super.key, required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MyContainerImage extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
           boxShadow: [BoxShadow(color: Colors.black87, blurRadius: 0.5)]),
-      child: icon,
+      child: widget,
     );
   }
 }

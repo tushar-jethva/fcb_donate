@@ -13,6 +13,10 @@ class User {
   final String mobile_alt_no;
   final String address;
   final String type;
+  final String profilePic;
+  final int totalDonation;
+  final int accepted;
+  final int declined;
   User({
     required this.name,
     required this.id,
@@ -22,6 +26,10 @@ class User {
     required this.mobile_alt_no,
     required this.address,
     required this.type,
+    required this.profilePic,
+    required this.totalDonation,
+    required this.accepted,
+    required this.declined,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,19 +42,27 @@ class User {
       'mobile_alt_no': mobile_alt_no,
       'address': address,
       'type': type,
+      'profilePic': profilePic,
+      'totalDonation': totalDonation,
+      'accepted': accepted,
+      'declined': declined,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      name: map['name'] ?? '',
-      id: map['_id'] ?? '',
-      token: map['token'] ?? '',
+      name: map['name'] ?? "",
+      id: map['id'] ?? "",
+      token: map['token'] ?? "",
       mobile_no: map['mobile_no'] ?? "",
-      email: map['email'] ?? '',
+      email: map['email'] ?? "",
       mobile_alt_no: map['mobile_alt_no'] ?? "",
-      address: map['address'] ?? '',
-      type: map['type'] ?? '',
+      address: map['address'] ?? "",
+      type: map['type'] ?? "",
+      profilePic: map['profilePic'] ?? "",
+      totalDonation: map['totalDonation']?? 0,
+      accepted: map['accepted'] ?? 0,
+      declined: map['declined'] ?? 0,
     );
   }
 

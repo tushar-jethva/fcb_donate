@@ -11,7 +11,11 @@ class UserProvider with ChangeNotifier {
       email: '',
       mobile_alt_no: "",
       address: '',
-      type: '');
+      type: '',
+      accepted: 0,
+      declined: 0,
+      profilePic: '',
+      totalDonation: 0);
   User get user => _user;
   void setUser(User newuser) {
     _user = newuser;

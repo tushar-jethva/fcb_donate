@@ -1,11 +1,17 @@
 import 'package:fcb_donate/constants/all_constant.dart';
+import 'package:fcb_donate/features/auth/services/auth_services.dart';
+import 'package:fcb_donate/models/user.dart';
+import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
+  static const routeName = '/profile';
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -18,7 +24,13 @@ class ProfileScreen extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            actions: [IconButton(onPressed: () {}, icon: Icon(Icons.logout))],
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    AuthServices().logOut(context);
+                  },
+                  icon: Icon(Icons.logout))
+            ],
           ),
         ),
       ),
@@ -47,9 +59,6 @@ class ProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
                         children: [
-                          Container(
-                              alignment: Alignment.center,
-                              child: const Text("Sindha")),
                           const SizedBox(
                             height: 70,
                           ),
@@ -63,14 +72,14 @@ class ProfileScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Column(children: const [
-                                    Text(
+                                  child: Column(children: [
+                                    const Text(
                                       "Total Donations",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Text(
-                                      "5",
-                                      style: TextStyle(
+                                      user.totalDonation.toString(),
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     )
                                   ]),
@@ -83,14 +92,14 @@ class ProfileScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Column(children: const [
-                                    Text(
+                                  child: Column(children: [
+                                    const Text(
                                       "Accepted",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Text(
-                                      "5",
-                                      style: TextStyle(
+                                      user.accepted.toString(),
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     )
                                   ]),
@@ -98,19 +107,20 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 172, 192, 192),
+                                    color: const Color.fromARGB(
+                                        255, 172, 192, 192),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Declined",
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       Text(
-                                        "5",
-                                        style: TextStyle(
+                                        user.declined.toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
@@ -119,12 +129,12 @@ class ProfileScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           Container(
                             alignment: Alignment.topLeft,
-                            child: Text(
+                            child: const Text(
                               "Donations",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
@@ -134,7 +144,7 @@ class ProfileScreen extends StatelessWidget {
                             child: GridView.builder(
                               itemCount: images.length,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3),
                               itemBuilder: (context, index) {
                                 return Image.network(images[index]['image']);
@@ -150,12 +160,15 @@ class ProfileScreen extends StatelessWidget {
               Positioned(
                 right: constraints.maxWidth * 0.62,
                 top: constraints.maxHeight / 6,
-                child: const CircleAvatar(
-                  radius: 60,
-                  backgroundImage: NetworkImage(
-                      "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
-                ),
+                child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(user.profilePic)),
               ),
+              Positioned(
+                  right: constraints.maxWidth * 0.20,
+                  top: constraints.maxHeight / 4.5,
+                  child: Text(user.name)),
             ],
           );
         },

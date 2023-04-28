@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:flutter/material.dart';
@@ -104,5 +105,12 @@ class AuthServices {
     } catch (e) {
       GlobalSnakbar().showSnackbar(e.toString());
     }
+  }
+
+  void logOut(BuildContext context) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('x-auth-token', "");
+    Navigator.pushNamedAndRemoveUntil(
+        context, SignUp.routeName, (route) => false);
   }
 }

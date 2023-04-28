@@ -1,6 +1,7 @@
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
+import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'features/auth/screens/login.dart';
@@ -35,6 +36,12 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
       //     routeSettings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
           builder: (_) => DonationScreen(), settings: routeSettings);
+
+      case ProfileScreen.routeName:
+      // Map<String, dynamic> data =
+      //     routeSettings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+          builder: (_) => const ProfileScreen(), settings: routeSettings);
     default:
       return MaterialPageRoute(
         settings: routeSettings,

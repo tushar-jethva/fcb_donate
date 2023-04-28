@@ -1,13 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
 import 'package:fcb_donate/utils/see_ngo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:gap/gap.dart';
 
+import '../models/ngo.dart';
 
-
-class MyNgoCard extends StatelessWidget {
+class MyNgoCard extends StatefulWidget {
   final String nameOfCity;
   final List<Map<String, dynamic>> list;
   const MyNgoCard({
@@ -15,6 +16,24 @@ class MyNgoCard extends StatelessWidget {
     required this.nameOfCity,
     required this.list,
   }) : super(key: key);
+
+  @override
+  State<MyNgoCard> createState() => _MyNgoCardState();
+}
+
+class _MyNgoCardState extends State<MyNgoCard> {
+  List<Ngo> ngos = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchNgo();
+  }
+
+  fetchNgo() async {
+    ngos = await NgoService().getNgoByCity(widget.nameOfCity, context);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,7 @@ class MyNgoCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    nameOfCity,
+                    widget.nameOfCity,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Colors.black87, fontWeight: FontWeight.w500),
                   ),
@@ -52,7 +71,7 @@ class MyNgoCard extends StatelessWidget {
             ],
           ),
           Container(
-            height: 524,
+            height: MediaQuery.of(context).size.height * 0.65,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -66,29 +85,34 @@ class MyNgoCard extends StatelessWidget {
                 Row(
                   children: [
                     MySeeNGOCard(
-                        img: list[0]['img'],
-                        name: list[0]['name'],
-                        area: list[0]['area'],
-                        desc: list[0]['desc']),
+                        img: ngos[4].image ??
+                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                        name: ngos[4].ngo_name,
+                        area: ngos[4].area,
+                        desc: ngos[4].description),
                     MySeeNGOCard(
-                        img: list[1]['img'],
-                        name: list[1]['name'],
-                        area: list[1]['area'],
-                        desc: list[1]['desc']),
+                        img: ngos[5].image ??
+                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                        name: ngos[5].ngo_name,
+                        area: ngos[5].area,
+                        desc: ngos[5].description),
                   ],
                 ),
                 Row(
                   children: [
                     MySeeNGOCard(
-                        img: list[2]['img'],
-                        name: list[2]['name'],
-                        area: list[2]['area'],
-                        desc: list[2]['desc']),
+                        img: ngos[2].image == null
+                            ? "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg"
+                            : ngos[2].image!,
+                        name: ngos[2].ngo_name,
+                        area: ngos[2].area,
+                        desc: ngos[2].description),
                     MySeeNGOCard(
-                        img: list[3]['img'],
-                        name: list[3]['name'],
-                        area: list[3]['area'],
-                        desc: list[3]['desc']),
+                        img: ngos[3].image ??
+                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                        name: ngos[3].ngo_name,
+                        area: ngos[3].area,
+                        desc: ngos[3].description),
                   ],
                 ),
               ],

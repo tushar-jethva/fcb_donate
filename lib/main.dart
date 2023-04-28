@@ -41,8 +41,24 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'FBC',
         theme: ThemeData(
-          // brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 244, 244, 244),
+          appBarTheme: const AppBarTheme(
+              color: Color.fromARGB(255, 244, 244, 244),
+              elevation: 0,
+              iconTheme: IconThemeData(color: Colors.black87)),
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+              titleMedium: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
+              titleSmall: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400)),
         ),
         onGenerateRoute: (settings) => generateRoutes(settings),
         home: Provider.of<UserProvider>(context).user.token.isNotEmpty

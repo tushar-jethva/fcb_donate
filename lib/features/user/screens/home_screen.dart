@@ -1,3 +1,4 @@
+import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
@@ -5,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../utils/container_image.dart';
 import '../../../utils/donate.dart';
 import '../../../utils/donors.dart';
+import '../../ngo/screen/ngo_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
@@ -83,10 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void navigateToNGO(String name) {
-    // Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (_) => MyNGOScreen(
-    //           imgUrl: name,
-    //         )));\
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => MyNGOScreen(
+              imgUrl: name,
+            )));
   }
 
   @override
@@ -105,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     InkWell(
                       onTap: dark,
                       child: MyContainerImage(
-                        icon: isBright
+                        widget: isBright
                             ? const Icon(
                                 Icons.nights_stay_outlined,
                                 color: Colors.teal,
@@ -116,12 +118,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                       ),
                     ),
-                    const MyContainerImage(
-                      icon: Icon(
-                        Icons.notifications_outlined,
-                        color: Colors.teal,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, ProfileScreen.routeName);
+                      },
+                      child: const MyContainerImage(
+                        widget: Icon(
+                          Icons.person,
+                          color: Colors.teal,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

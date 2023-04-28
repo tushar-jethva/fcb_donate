@@ -5,10 +5,11 @@ const PORT = 3000;
 const DB = "mongodb+srv://tushar_023:JETHvA%409999@ncbdonate.2gwhl0z.mongodb.net/test";
 
 const authRouter = require('./routes/auth');
-
+const ngoRouter = require('./routes/ngo');
 const app = express();
 app.use(express.json());
 app.use(authRouter);
+app.use(ngoRouter);
 app.get("/fake",(req,res) => {
     res.json({'name':'vipendrasinh'});
 })

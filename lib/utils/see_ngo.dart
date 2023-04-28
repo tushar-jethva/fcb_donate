@@ -18,13 +18,14 @@ class MySeeNGOCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      height: 240,
-      width: 170,
+      height: size.height * 0.30,
+      width: size.width * 0.40,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+          image: DecorationImage(image: NetworkImage(img), fit: BoxFit.cover),
           color: Colors.amberAccent),
       child: Container(
         decoration: BoxDecoration(

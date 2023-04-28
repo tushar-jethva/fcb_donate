@@ -8,7 +8,7 @@ import '../../../utils/button.dart';
 // ignore: must_be_immutable
 class Login extends StatefulWidget {
   static const routeName = "/login";
-  Login({super.key});
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
