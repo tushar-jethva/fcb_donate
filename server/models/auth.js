@@ -25,10 +25,7 @@ const UserModel = mongoose.Schema({
         required:true,
         type: String,
     },
-    id:{
-        requred:true,
-        type:String
-    },
+    
     mobile_no:{
         default:"",
         type:String,

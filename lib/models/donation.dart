@@ -42,7 +42,7 @@ class Donation {
 
   factory Donation.fromMap(Map<String, dynamic> map) {
     return Donation(
-      id: map['id'] as String,
+      id: map['_id'] as String,
       ngoName: map['ngoName'] as String,
       category: map['category'] as String,
       userName: map['userName'] as String,

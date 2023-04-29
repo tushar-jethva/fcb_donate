@@ -27,7 +27,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ? TextFormField(
             style: TextStyle(color: Colors.black),
             validator: (val) {
-              if (val!.isEmpty || val == null) {
+              if (widget.hintText != "Mobile2" && val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';
               }
             },
@@ -55,7 +55,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             style: TextStyle(color: Colors.black),
             maxLines: widget.lines,
             validator: (val) {
-              if (val!.isEmpty || val == null) {
+              if (widget.hintText != "Mobile2" && val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';
               }
             },
@@ -63,11 +63,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText: false,
             decoration: InputDecoration(
                 hintText: widget.hintText,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.black),
                 ),
-                hintStyle: const TextStyle(fontSize: 14, color: Colors.black)),
+                hintStyle: const TextStyle(fontSize: 14, color: Colors.grey)),
           );
   }
 }

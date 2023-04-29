@@ -7,9 +7,11 @@ const DB = "mongodb+srv://tushar_023:JETHvA%409999@ncbdonate.2gwhl0z.mongodb.net
 const authRouter = require('./routes/auth');
 const ngoRouter = require('./routes/ngo');
 const app = express();
+const DonationRouter = require('./routes/donation');
 app.use(express.json());
 app.use(authRouter);
 app.use(ngoRouter);
+app.use(DonationRouter);
 app.get("/fake",(req,res) => {
     res.json({'name':'vipendrasinh'});
 })

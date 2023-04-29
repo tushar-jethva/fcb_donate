@@ -27,7 +27,6 @@ class AuthServices {
       // ignore: use_build_context_synchronously
       httpErrorHandling(
           res: res,
-          context: context,
           onSuccess: () {
             GlobalSnakbar().showSnackbar("Sign up Successfully");
           });
@@ -48,7 +47,6 @@ class AuthServices {
       // ignore: use_build_context_synchronously
       httpErrorHandling(
         res: res,
-        context: context,
         onSuccess: () async {
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString('x-auth-token', jsonDecode(res.body)['token']);
@@ -84,7 +82,6 @@ class AuthServices {
       // ignore: use_build_context_synchronously
       httpErrorHandling(
           res: res,
-          context: context,
           onSuccess: () async {
             if (jsonDecode(res.body) == true) {
               http.Response userRes = await http.get(
@@ -110,6 +107,7 @@ class AuthServices {
   void logOut(BuildContext context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('x-auth-token', "");
+    // ignore: use_build_context_synchronously
     Navigator.pushNamedAndRemoveUntil(
         context, SignUp.routeName, (route) => false);
   }

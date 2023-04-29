@@ -1,4 +1,4 @@
-import 'package:fcb_donate/features/user/screens/ngo_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../constants/all_constant.dart';
@@ -16,13 +16,6 @@ class FeedCard extends StatelessWidget {
         itemCount: images.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, NgoScreen.routeName, arguments: {
-                'name': images[index]['name'],
-                'image': images[index]['image'],
-                'location': images[index]['location']
-              });
-            },
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8).copyWith(top: 10),

@@ -44,6 +44,7 @@ class _MyNGOScreenState extends State<MyNGOScreen> {
       "desc": "We are work for child education and etc."
     }
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

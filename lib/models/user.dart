@@ -52,7 +52,7 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       name: map['name'] ?? "",
-      id: map['id'] ?? "",
+      id: map['_id'] ?? "",
       token: map['token'] ?? "",
       mobile_no: map['mobile_no'] ?? "",
       email: map['email'] ?? "",

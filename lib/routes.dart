@@ -1,12 +1,16 @@
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
+import 'package:fcb_donate/features/ngo/screen/donation_form.dart';
+import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'features/auth/screens/login.dart';
-import 'features/user/screens/donation_screen.dart';
-import 'features/user/screens/ngo_screen.dart';
+
+import 'features/ngo/screen/ngo_list_screen.dart';
+
+import 'models/ngo.dart';
 
 Route<dynamic> generateRoutes(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -17,31 +21,34 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     case SignUp.routeName:
       return MaterialPageRoute(
           builder: (_) => const SignUp(), settings: routeSettings);
+    case NgoListScreen.routeName:
+      List<Ngo> ngos = routeSettings.arguments as List<Ngo>;
+      return MaterialPageRoute(
+          builder: (_) => NgoListScreen(
+                ngos: ngos,
+              ),
+          settings: routeSettings);
 
     case HomeScreen.routeName:
       return MaterialPageRoute(
           builder: (_) => const HomeScreen(), settings: routeSettings);
 
-    case NgoScreen.routeName:
-      Map<String, dynamic> data =
-          routeSettings.arguments as Map<String, dynamic>;
+    case ProfileScreen.routeName:
       return MaterialPageRoute(
-          builder: (_) => NgoScreen(
-                data: data,
+          builder: (_) => const ProfileScreen(), settings: routeSettings);
+    case NgoDetailScreen.routeName:
+      Ngo ngo = routeSettings.arguments as Ngo;
+      return MaterialPageRoute(
+          builder: (_) => NgoDetailScreen(
+                ngo: ngo,
               ),
           settings: routeSettings);
 
-    case DonationScreen.routeName:
-      // Map<String, dynamic> data =
-      //     routeSettings.arguments as Map<String, dynamic>;
+    case DonationForm.routeName:
+      Ngo ngo = routeSettings.arguments as Ngo;
       return MaterialPageRoute(
-          builder: (_) => DonationScreen(), settings: routeSettings);
+          builder: (_) => DonationForm(ngo: ngo), settings: routeSettings);
 
-      case ProfileScreen.routeName:
-      // Map<String, dynamic> data =
-      //     routeSettings.arguments as Map<String, dynamic>;
-      return MaterialPageRoute(
-          builder: (_) => const ProfileScreen(), settings: routeSettings);
     default:
       return MaterialPageRoute(
         settings: routeSettings,

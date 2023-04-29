@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
+import 'package:fcb_donate/utils/loader.dart';
 import 'package:fcb_donate/utils/see_ngo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:gap/gap.dart';
 
+import '../features/ngo/screen/ngo_list_screen.dart';
 import '../models/ngo.dart';
 
 class MyNgoCard extends StatefulWidget {
@@ -22,7 +23,7 @@ class MyNgoCard extends StatefulWidget {
 }
 
 class _MyNgoCardState extends State<MyNgoCard> {
-  List<Ngo> ngos = [];
+  List<Ngo>? ngos = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -31,7 +32,7 @@ class _MyNgoCardState extends State<MyNgoCard> {
   }
 
   fetchNgo() async {
-    ngos = await NgoService().getNgoByCity(widget.nameOfCity, context);
+    ngos = await NgoService().getNgoByCity(widget.nameOfCity);
     setState(() {});
   }
 
@@ -61,12 +62,18 @@ class _MyNgoCardState extends State<MyNgoCard> {
                   ),
                 ],
               ),
-              const Text(
-                "See All",
-                style: TextStyle(
-                    color: Colors.teal,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, NgoListScreen.routeName,
+                      arguments: ngos);
+                },
+                child: const Text(
+                  "See All",
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500),
+                ),
               )
             ],
           ),
@@ -79,44 +86,46 @@ class _MyNgoCardState extends State<MyNgoCard> {
                 boxShadow: const [
                   BoxShadow(color: Colors.black54, blurRadius: 0.1)
                 ]),
-            child: Column(
-              children: [
-                const Gap(5),
-                Row(
-                  children: [
-                    MySeeNGOCard(
-                        img: ngos[4].image ??
-                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
-                        name: ngos[4].ngo_name,
-                        area: ngos[4].area,
-                        desc: ngos[4].description),
-                    MySeeNGOCard(
-                        img: ngos[5].image ??
-                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
-                        name: ngos[5].ngo_name,
-                        area: ngos[5].area,
-                        desc: ngos[5].description),
-                  ],
-                ),
-                Row(
-                  children: [
-                    MySeeNGOCard(
-                        img: ngos[2].image == null
-                            ? "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg"
-                            : ngos[2].image!,
-                        name: ngos[2].ngo_name,
-                        area: ngos[2].area,
-                        desc: ngos[2].description),
-                    MySeeNGOCard(
-                        img: ngos[3].image ??
-                            "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
-                        name: ngos[3].ngo_name,
-                        area: ngos[3].area,
-                        desc: ngos[3].description),
-                  ],
-                ),
-              ],
-            ),
+            child: ngos!.length < 4
+                ? const Loader()
+                : Column(
+                    children: [
+                      const Gap(5),
+                      Row(
+                        children: [
+                          MySeeNGOCard(
+                              img: ngos![4].image ??
+                                  "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                              name: ngos![4].ngo_name,
+                              area: ngos![4].area,
+                              desc: ngos![4].description),
+                          MySeeNGOCard(
+                              img: ngos![5].image ??
+                                  "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                              name: ngos![5].ngo_name,
+                              area: ngos![5].area,
+                              desc: ngos![5].description),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          MySeeNGOCard(
+                              img: ngos![2].image == null
+                                  ? "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg"
+                                  : ngos![2].image!,
+                              name: ngos![2].ngo_name,
+                              area: ngos![2].area,
+                              desc: ngos![2].description),
+                          MySeeNGOCard(
+                              img: ngos![3].image ??
+                                  "https://www.ngoregistration.org/wp-content/uploads/2018/06/NGO.jpg",
+                              name: ngos![3].ngo_name,
+                              area: ngos![3].area,
+                              desc: ngos![3].description),
+                        ],
+                      ),
+                    ],
+                  ),
           )
         ],
       ),
