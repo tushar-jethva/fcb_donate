@@ -7,6 +7,7 @@ import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart'
 import 'package:fcb_donate/provider/ngoprovider.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:fcb_donate/routes.dart';
+import 'package:fcb_donate/splash_screen/splash_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ import 'admin/screens/home_ngo.dart';
 import 'features/user/screens/home_screen.dart';
 
 void main() {
-  //hi i am tushar
+  //hi i am tushargit bra
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NgoProvider()),
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
         //             : const SuperAdminScreen()
         //     : const SignUp()
 
-        home: const FirstScreen(),
+        home: const SplashScreen(),
         );
   }
 }
