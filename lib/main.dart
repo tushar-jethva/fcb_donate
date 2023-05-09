@@ -15,6 +15,7 @@ import 'admin/screens/home_ngo.dart';
 import 'features/user/screens/home_screen.dart';
 
 void main() {
+  //hi i am tushar
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NgoProvider()),
