@@ -1,8 +1,12 @@
 import 'package:fcb_donate/features/ngo/screen/donation_form.dart';
+import 'package:fcb_donate/features/super_admin/service/super_admin_service.dart';
+import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:fcb_donate/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
+import '../../../constants/all_constant.dart';
 import '../../../models/ngo.dart';
 
 class NgoDetailScreen extends StatelessWidget {
@@ -11,8 +15,11 @@ class NgoDetailScreen extends StatelessWidget {
   Ngo ngo;
   NgoDetailScreen({super.key, required this.ngo});
 
+  deleteNgo(String id) {}
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +53,7 @@ class NgoDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(ngo.image!),
+                      image: NetworkImage(ngo.ngo_photo),
                     ),
                   ),
                 ),
@@ -148,9 +155,11 @@ class NgoDetailScreen extends StatelessWidget {
                 ),
                 const Gap(15),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     Navigator.pushNamed(context, DonationForm.routeName,
                         arguments: ngo);
+
+                    // GlobalSnakbar().showSnackbar("Ngo deleted Successfully");
                   },
                   child: CustomButton(
                     widget: const Text(

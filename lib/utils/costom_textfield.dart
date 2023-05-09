@@ -25,7 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return widget.isPass
         ? TextFormField(
-            style: TextStyle(color: Colors.black),
+            style:const  TextStyle(color: Colors.black),
             validator: (val) {
               if (widget.hintText != "Mobile2" && val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';
@@ -45,6 +45,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   },
                 ),
                 hintText: widget.hintText,
+                labelText: widget.hintText,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.black),
@@ -62,6 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             obscureText: false,
             decoration: InputDecoration(
+                labelText: widget.hintText,
                 hintText: widget.hintText,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),

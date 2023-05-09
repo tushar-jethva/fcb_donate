@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fcb_donate/constants/all_constant.dart';
+import 'package:fcb_donate/features/user/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -10,15 +11,17 @@ import '../../../models/donation.dart';
 import '../../../models/ngo.dart';
 
 class NgoService {
-  Future<List<Ngo>> getNgoByCity(String city) async {
+  Future<List<Ngo>> getNgoByCity(
+      {required String city, required String type}) async {
     List<Ngo> ngos = [];
     try {
-      http.Response res =
-          await http.get(Uri.parse("$url/api/getNgoByCity?city=$city"));
+      http.Response res = await http
+          .get(Uri.parse("$url/api/getNgoByCity?city=$city&type=$type"));
 
       httpErrorHandling(
           res: res,
           onSuccess: () {
+            print(res);
             for (int i = 0; i < jsonDecode(res.body).length; i++) {
               ngos.add(
                 Ngo.fromJson(
@@ -57,6 +60,8 @@ class NgoService {
             GlobalSnakbar().showSnackbar("Donation successfully");
             Navigator.pop(context);
           });
+     // ignore: use_build_context_synchronously
+     await UserService().getTotalDonation(donation.userId, context);
     } catch (e) {
       GlobalSnakbar().showSnackbar(e.toString());
     }

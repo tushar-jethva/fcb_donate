@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-String url = "http://192.168.96.230:3000";
+String url = "http://192.168.122.230:3000";
 
 class GlobalSnakbar {
   static GlobalKey<ScaffoldMessengerState> key =
@@ -39,7 +39,7 @@ Future<List<XFile?>> pickMultiImage() async {
   return images;
 }
 
-Future<XFile?> pickImage() async {
+Future<XFile?> pickOneImage() async {
   XFile? image = await ImagePicker()
       .pickImage(source: ImageSource.gallery, imageQuality: 20);
   if (image != null) {
@@ -79,3 +79,5 @@ List images = [
     'location': "bhavnagar",
   }
 ];
+
+List type = ["books", "clothes", "money", "food"];

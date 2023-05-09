@@ -5,6 +5,22 @@ const bjs = require('bcryptjs');
 const User = require('../models/auth');
 const Auth = require('../middlewares/auth');
 const authRouter = express.Router();
+const Donation = require('../models/donation');
+const Ngo = require('../models/ngo_models');
+
+authRouter.post('/api/ngoLogin' , async(req,res) => {
+    try{
+        const {username,password} = req.body;
+        const existNgo = await Ngo.findOne({username});
+        if(!existNgo){
+            return res.status(400).json({msg:"Ngo with this username in not Exist"});
+        }
+        let ngo = await Ngo.findOne({username});
+        res.json(ngo);
+    }catch(e){
+        res.status(500).json({error:e.message});
+    }
+})
 
 
 authRouter.post('/api/auth/signUp',async(req,res)=>{
@@ -84,6 +100,35 @@ authRouter.get('/api/getUserData',Auth,async(req,res)=>{
     res.json({...user._doc,token});
 });
 
+authRouter.get('/api/getTotalDonation', async(req,res)=> {
+    const id = req.query.id;
+    let user = await User.findById(id);
+    res.json({"totalDonation":user.totalDonation});
+})
 
+authRouter.get('/api/getUserDonations', async(req,res) =>{
+    try{
+        const userId = req.query.id;
+        let user = await Donation.find({userId});
+        res.json(user);
+
+    }catch(e){
+        res.status(500).json({error:e.message})
+    }
+});
+
+
+authRouter.post('/api/updateProfilPic',async(req,res) => {
+   try{
+    const {profilePic,id} = req.body;
+    let user = await User.findById(id);
+    user.profilePic = profilePic;
+    user = await user.save();
+    res.json({"profilePic":user.profilePic})
+   }
+   catch(e){
+res.status(500).json({error:e.message});
+   }
+})
 module.exports = authRouter;
 

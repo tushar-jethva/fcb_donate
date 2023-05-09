@@ -2,15 +2,19 @@
 const express = require("express");
 
 const DonationModel = require("../models/donation");
-const NgoRouter = require("./ngo");
 
+const UserModel = require("../models/auth");
 const DonationRouter = express.Router();
 
 DonationRouter.post("/api/postDonation",async(req,res) => {
     try{
-        const {ngoName,category,userName,description,images,address,pinecode,city,state} = req.body;
+        const {ngoId,userId,mobile1,mobile2,ngoName,category,userName,description,images,address,pincode,city,state} = req.body;
         let donation = new DonationModel(
             {
+                ngoId,
+                userId,
+                mobile1,
+                mobile2,
                 userName,
                 ngoName,
                 category,
@@ -18,16 +22,41 @@ DonationRouter.post("/api/postDonation",async(req,res) => {
                 address,
                 city,
                 state,
-                pinecode,
+                pincode,
                 images
             },
             
         );
         donation =await donation.save();
+        
+        let user =await  UserModel.findById(userId);
+         user.totalDonation =  user.totalDonation+1;
+          user = await user.save();
+          console.log(user);
         res.json(donation);
     }catch(e){
         res.status(500).json({err:e.message});
     }
 });
 
-module.exports = NgoRouter;
+DonationRouter.get('/api/getAllRequests',async(req,res) => {
+   try{
+    const ngoId = req.query.id;
+    console.log(ngoId);
+    let donation = await DonationModel.find(ngoId)
+    console.log(donation)
+    let list =[];
+    for(var i=0;i<donation.length;i++){
+        if(donation[i].status == 0){
+            list.push(donation[i]);
+        }
+    }
+    console.log(list);
+    res.json(list);
+
+   }catch(e){
+    res.status(500).json({err:"not found"});
+   }
+});
+
+module.exports = DonationRouter

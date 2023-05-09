@@ -14,6 +14,8 @@ class User {
   final String address;
   final String type;
   final String profilePic;
+  
+
   final int totalDonation;
   final int accepted;
   final int declined;
@@ -27,6 +29,7 @@ class User {
     required this.address,
     required this.type,
     required this.profilePic,
+  
     required this.totalDonation,
     required this.accepted,
     required this.declined,
@@ -46,11 +49,13 @@ class User {
       'totalDonation': totalDonation,
       'accepted': accepted,
       'declined': declined,
+      
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
+      
       name: map['name'] ?? "",
       id: map['_id'] ?? "",
       token: map['token'] ?? "",
@@ -60,7 +65,7 @@ class User {
       address: map['address'] ?? "",
       type: map['type'] ?? "",
       profilePic: map['profilePic'] ?? "",
-      totalDonation: map['totalDonation']?? 0,
+      totalDonation: map['totalDonation'] ?? 0,
       accepted: map['accepted'] ?? 0,
       declined: map['declined'] ?? 0,
     );
@@ -70,4 +75,38 @@ class User {
 
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+ 
+
+  User copyWith({
+    String? name,
+    String? id,
+    String? token,
+    String? mobile_no,
+    String? email,
+    String? mobile_alt_no,
+    String? address,
+    String? type,
+    String? profilePic,
+   
+    int? totalDonation,
+    int? accepted,
+    int? declined,
+  }) {
+    return User(
+      name: name ?? this.name,
+      id: id ?? this.id,
+      token: token ?? this.token,
+      mobile_no: mobile_no ?? this.mobile_no,
+      email: email ?? this.email,
+      mobile_alt_no: mobile_alt_no ?? this.mobile_alt_no,
+      address: address ?? this.address,
+      type: type ?? this.type,
+      profilePic: profilePic ?? this.profilePic,
+      
+      totalDonation: totalDonation ?? this.totalDonation,
+      accepted: accepted ?? this.accepted,
+      declined: declined ?? this.declined,
+    );
+  }
 }

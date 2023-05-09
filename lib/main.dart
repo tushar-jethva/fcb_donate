@@ -1,20 +1,26 @@
 import 'package:fcb_donate/constants/all_constant.dart';
-import 'package:fcb_donate/features/admin/screens/admin_screen.dart';
+import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
+import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
+import 'package:fcb_donate/provider/ngoprovider.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:fcb_donate/routes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'admin/screens/home_ngo.dart';
 import 'features/user/screens/home_screen.dart';
 
 void main() {
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
-    child: MyApp(),
+    providers: [
+      ChangeNotifierProvider(create: (_) => NgoProvider()),
+      ChangeNotifierProvider(create: (_) => UserProvider())
+    ],
+    child: const MyApp(),
   ));
 }
 
@@ -61,10 +67,15 @@ class _MyAppState extends State<MyApp> {
                   fontWeight: FontWeight.w400)),
         ),
         onGenerateRoute: (settings) => generateRoutes(settings),
-        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-            ? Provider.of<UserProvider>(context).user.type == 'user'
-                ? const HomeScreen()
-                : const AdminScreen()
-            : const SignUp());
+        // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+        //     ? Provider.of<UserProvider>(context).user.type == 'admin'
+        //         ? const MyHomeNgoAdmin()
+        //         : Provider.of<UserProvider>(context).user.type == 'user'
+        //             ? const MyHomeNgoAdmin()
+        //             : const SuperAdminScreen()
+        //     : const SignUp()
+
+        home: const FirstScreen(),
+        );
   }
 }

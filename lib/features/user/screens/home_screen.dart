@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": "assets/book-stack.png",
     },
     {"icon": "assets/clean-clothes.png"},
+    {"icon": "assets/food-delivery.png"},
     {"icon": "assets/food-delivery.png"}
   ];
 
@@ -46,7 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       "text": "Food",
       "image": const AssetImage("assets/food.jpg"),
-    }
+    },
+    {
+      "text": "Money",
+      "image": const AssetImage("assets/money.jpg"),
+    },
   ];
 
   List<Map<String, dynamic>> list2 = [
@@ -84,9 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void navigateToNGO(String name) {
+  void navigateToNGO(String name, String type) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => MyNGOScreen(
+              type: type,
               imgUrl: name,
             )));
   }
@@ -190,16 +196,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const Gap(1),
               SizedBox(
-                height: 200,
+                height: 100,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 3,
+                    itemCount: list.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () => navigateToNGO(icons[index]["icon"]),
+                        onTap: () => navigateToNGO(icons[index]["icon"],
+                            list[index]['text'].toString().toLowerCase()),
                         child: MyDonate(
                           text: list[index]["text"],
-                          image: list[index]['image'],
+                          image: icons[index]['icon'],
                         ),
                       );
                     }),

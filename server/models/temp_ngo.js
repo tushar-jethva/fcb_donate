@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const donationSchema = require('../models/donation')
 
-NgoSchema = mongoose.Schema({
-    
-
+ TempNgoSchema = mongoose.Schema({
     username:{
         required:true,
         type:String,
@@ -82,5 +79,5 @@ NgoSchema = mongoose.Schema({
     }
 });
 
-const NGOModel = mongoose.model("NGOs",NgoSchema);
-module.exports = NGOModel;
+const TempNGOModel = mongoose.model("TempNGOs",TempNgoSchema);
+module.exports = TempNGOModel;

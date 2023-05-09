@@ -1,21 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:fcb_donate/constants/all_constant.dart';
-import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
-import 'package:fcb_donate/models/donation.dart';
-import 'package:fcb_donate/utils/button.dart';
-import 'package:fcb_donate/utils/costom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import 'package:fcb_donate/constants/all_constant.dart';
+import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
+import 'package:fcb_donate/models/donation.dart';
+import 'package:fcb_donate/provider/userprovider.dart';
+import 'package:fcb_donate/utils/button.dart';
+import 'package:fcb_donate/utils/costom_textfield.dart';
+import 'package:fcb_donate/utils/loader.dart';
 
 import '../../../models/ngo.dart';
 
 class DonationForm extends StatefulWidget {
   static const routeName = '/form';
   Ngo ngo;
-  DonationForm({super.key, required this.ngo});
+
+  DonationForm({
+    Key? key,
+    required this.ngo,
+  }) : super(key: key);
 
   @override
   State<DonationForm> createState() => _DonationFormState();
@@ -37,7 +46,6 @@ class _DonationFormState extends State<DonationForm> {
   TextEditingController _state = new TextEditingController();
 
   TextEditingController _description = new TextEditingController();
-  TextEditingController _category = new TextEditingController();
 
   List<XFile?>? images;
 
@@ -47,9 +55,10 @@ class _DonationFormState extends State<DonationForm> {
   }
 
   final _donationkey = GlobalKey<FormState>();
-
+  bool isLoad = false;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -89,11 +98,6 @@ class _DonationFormState extends State<DonationForm> {
                       height: 20,
                     ),
                     CustomTextField(hintText: "Mobile2", controller: _mobile2),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                        hintText: "Category", controller: _category),
                     const SizedBox(
                       height: 20,
                     ),
@@ -171,6 +175,9 @@ class _DonationFormState extends State<DonationForm> {
               const Gap(20),
               GestureDetector(
                 onTap: () async {
+                  setState(() {
+                    isLoad = true;
+                  });
                   String pattern = r'^(?:[+0][1-9])?[0-9]{10,12}$';
                   RegExp regExp = new RegExp(pattern);
                   if (_donationkey.currentState!.validate()) {
@@ -182,27 +189,37 @@ class _DonationFormState extends State<DonationForm> {
                       List<String> urls = await NgoService().getImagesUrl(
                           images: images!, name: widget.ngo.ngo_name);
                       Donation donation = Donation(
-                          id: "",
+                          ngoId: widget.ngo.id,
+                          userId: user.id,
+                          donationId: "",
                           ngoName: widget.ngo.ngo_name,
-                          category: _category.text,
+                          category: " ",
                           userName: _nameController.text,
                           description: _description.text,
                           images: urls,
                           address: _address.text,
                           pincode: _pincode.text,
                           city: _city.text,
-                          state: _state.text);
-                          
+                          state: _state.text,
+                          mobile1: _mobile1.text,
+                          mobile2: _mobile2.text);
+
+                      await NgoService().postDonation(donation, context);
                     }
                   } else {
                     GlobalSnakbar().showSnackbar("Some Field are blank");
                   }
+                  setState(() {
+                    isLoad = false;
+                  });
                 },
                 child: CustomButton(
-                    widget: Text(
-                  "Submit",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
+                    widget: isLoad
+                        ? const Loader()
+                        : Text(
+                            "Submit",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
               )
             ],
           ),

@@ -8,9 +8,11 @@ import '../../../utils/ngo_card.dart';
 
 class MyNGOScreen extends StatefulWidget {
   final String imgUrl;
+  final String type;
   const MyNGOScreen({
     Key? key,
     required this.imgUrl,
+    required this.type
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class _MyNGOScreenState extends State<MyNGOScreen> {
           child: Column(
             children: [
               MyNgoCard(
+                type: widget.type,
                 nameOfCity: "Bhavnagar",
                 list: list,
               ),

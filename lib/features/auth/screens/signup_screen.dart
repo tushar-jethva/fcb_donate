@@ -2,13 +2,15 @@ import 'package:fcb_donate/features/auth/screens/login.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
 import 'package:fcb_donate/utils/costom_textfield.dart';
 import 'package:flutter/material.dart';
-
+import 'package:gap/gap.dart';
 
 import '../../../utils/button.dart';
+import '../../user/screens/registrationform.dart';
 
 class SignUp extends StatefulWidget {
   static const routeName = "/signup";
-  const SignUp({super.key});
+  final bool user;
+  const SignUp({super.key,required this.user});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -17,17 +19,15 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController _emailController = TextEditingController();
 
- final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final TextEditingController _nameController = TextEditingController();
 
- final  _signUpKey = GlobalKey<FormState>();
+  final _signUpKey = GlobalKey<FormState>();
 
   AuthServices authServices = AuthServices();
   bool isSighup = false;
   signUpUser(name, email, password) async {
-
-
     setState(() {
       isSighup = true;
     });
@@ -128,11 +128,12 @@ class _SignUpState extends State<SignUp> {
                         ),
                         InkWell(
                           onTap: () {
-                            if(_signUpKey.currentState!.validate()){
-                              signUpUser(_nameController.text,
-                                _emailController.text, _passwordController.text);
+                            if (_signUpKey.currentState!.validate()) {
+                              signUpUser(
+                                  _nameController.text,
+                                  _emailController.text,
+                                  _passwordController.text);
                             }
-                            
                           },
                           child: CustomButton(
                             widget: isSighup
@@ -156,10 +157,22 @@ class _SignUpState extends State<SignUp> {
                             const Text("Already have an Account?"),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, Login.routeName, (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      Login.routeName, (route) => false,arguments: widget.user);
                                 },
                                 child: const Text("Login "))
+                          ],
+                        ),
+                        const Gap(10),
+                        Row(
+                          children: [
+                            const Text("Want to Register your Ngo?"),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, MySuperForm.routeName);
+                                },
+                                child: const Text("Ngo Registration"))
                           ],
                         )
                       ]),

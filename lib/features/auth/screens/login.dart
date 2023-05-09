@@ -1,3 +1,4 @@
+import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
 import 'package:fcb_donate/utils/costom_textfield.dart';
@@ -8,7 +9,8 @@ import '../../../utils/button.dart';
 // ignore: must_be_immutable
 class Login extends StatefulWidget {
   static const routeName = "/login";
-  const Login({super.key});
+  final bool user;
+  const Login({super.key, required this.user});
 
   @override
   State<Login> createState() => _LoginState();
@@ -29,8 +31,14 @@ class _LoginState extends State<Login> {
     setState(() {
       isLogin = true;
     });
-    await authServices.signInUser(
-        email: email, password: password, context: context);
+    if (widget.user) {
+      await authServices.signInUser(
+          email: email, password: password, context: context);
+    } else {
+      await authServices.singInNgo(
+          username: email, password: password, context: context);
+    }
+
     setState(() {
       isLogin = false;
     });
@@ -40,7 +48,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
@@ -54,6 +61,21 @@ class _LoginState extends State<Login> {
             ),
             child: Column(
               children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 3, top: 3),
+                  alignment: Alignment.topLeft,
+                  child: SafeArea(
+                      child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, FirstScreen.routeName, (route) => false);
+                    },
+                    icon: const Icon(
+                      Icons.navigate_before,
+                      size: 40,
+                    ),
+                  )),
+                ),
                 Expanded(
                   flex: 2,
                   child: SafeArea(
@@ -109,7 +131,8 @@ class _LoginState extends State<Login> {
                             height: 20,
                           ),
                           CustomTextField(
-                              hintText: "Email", controller: _emailController),
+                              hintText: widget.user ? "Email" : "Username",
+                              controller: _emailController),
                           const SizedBox(
                             height: 20,
                           ),
@@ -151,7 +174,8 @@ class _LoginState extends State<Login> {
                               TextButton(
                                   onPressed: () {
                                     Navigator.pushNamedAndRemoveUntil(context,
-                                        SignUp.routeName, (route) => false);
+                                        SignUp.routeName, (route) => false,
+                                        arguments: widget.user);
                                   },
                                   child: const Text("Sign Up"))
                             ],
