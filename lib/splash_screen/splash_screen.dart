@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../admin/screens/home_ngo.dart';
@@ -29,19 +30,53 @@ class _SplashScreenState extends State<SplashScreen> {
   another() {
     Provider.of<UserProvider>(context, listen: false).user.token.isNotEmpty
         ? Provider.of<UserProvider>(context, listen: false).user.type == 'user'
-            ? Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName,(route) => false)
-            : Navigator.pushNamedAndRemoveUntil(context, FirstScreen.routeName,(route) => false)
-        : Navigator.pushNamedAndRemoveUntil(context, FirstScreen.routeName,(route) => false);
+            ? Navigator.pushNamedAndRemoveUntil(
+                context, HomeScreen.routeName, (route) => false)
+            : Navigator.pushNamedAndRemoveUntil(
+                context, FirstScreen.routeName, (route) => false)
+        : Navigator.pushNamedAndRemoveUntil(
+            context, FirstScreen.routeName, (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Container(
-        decoration:BoxDecoration(
-          image: DecorationImage(image: AssetImage())
+    return Stack(
+      children: [
+        Opacity(
+          opacity: 0.5,
+          child: Scaffold(
+              backgroundColor: Color.fromARGB(255, 5, 27, 3),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 100,
+                      backgroundImage: AssetImage(
+                        "assets/logo.png",
+                      ),
+                    ),
+                  ),
+                  Gap(10),
+                  Center(
+                    child: Text(
+                      "FOOD | CLOTHES | BOOKS",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 180, 6),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  )
+                ],
+              )),
+        ),
+        Positioned(
+          bottom: 90,
+          left: MediaQuery.of(context).size.width * 0.45,
+          child: Loader(),
         )
-      ),
+      ],
     );
   }
 }
