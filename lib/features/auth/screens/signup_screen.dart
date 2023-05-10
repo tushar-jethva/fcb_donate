@@ -10,7 +10,7 @@ import '../../user/screens/registrationform.dart';
 class SignUp extends StatefulWidget {
   static const routeName = "/signup";
   final bool user;
-  const SignUp({super.key,required this.user});
+  const SignUp({super.key, required this.user});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -54,6 +54,22 @@ class _SignUpState extends State<SignUp> {
           ),
           child: Column(
             children: [
+              Container(
+                padding: const EdgeInsets.only(left: 3, top: 3),
+                alignment: Alignment.topLeft,
+                child: SafeArea(
+                    child: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Login.routeName,
+                        arguments: true);
+                  },
+                  icon: const Icon(
+                    Icons.navigate_before,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                )),
+              ),
               Expanded(
                 flex: 2,
                 child: SafeArea(
@@ -138,7 +154,7 @@ class _SignUpState extends State<SignUp> {
                           child: CustomButton(
                             widget: isSighup
                                 ? const CircularProgressIndicator(
-                                    color: Colors.red,
+                                    color: Colors.white,
                                   )
                                 : const Text(
                                     "Sign Up",
@@ -154,25 +170,43 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Row(
                           children: [
-                            const Text("Already have an Account?"),
+                            const Text("Already have an Account?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 31, 64, 60))),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamedAndRemoveUntil(context,
-                                      Login.routeName, (route) => false,arguments: widget.user);
+                                      Login.routeName, (route) => false,
+                                      arguments: widget.user);
                                 },
-                                child: const Text("Login "))
+                                child: const Text(
+                                  "Login ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 31, 64, 60)),
+                                ))
                           ],
                         ),
-                        const Gap(10),
                         Row(
                           children: [
-                            const Text("Want to Register your Ngo?"),
+                            const Text(
+                              "Want to Register your Ngo?",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 31, 64, 60)),
+                            ),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
                                       context, MySuperForm.routeName);
                                 },
-                                child: const Text("Ngo Registration"))
+                                child: const Text(
+                                  "Ngo Registration",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 31, 64, 60)),
+                                ))
                           ],
                         )
                       ]),

@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Text(
                       "FOOD | CLOTHES | BOOKS",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 255, 180, 6),
+                          color: Color.fromARGB(255, 206, 155, 4),
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
               )),
         ),
         Positioned(
-          bottom: 90,
+          bottom: 200,
           left: MediaQuery.of(context).size.width * 0.45,
           child: Loader(),
         )

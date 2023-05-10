@@ -1,3 +1,4 @@
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -38,19 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> list = [
     {
       "text": "Books",
-      "image": const AssetImage("assets/books.jpeg"),
+      "image": "assets/nb.png",
     },
     {
       "text": "Clothes",
-      "image": const AssetImage("assets/clothes.jpeg"),
+      "image": "assets/nc.png",
     },
     {
       "text": "Food",
-      "image": const AssetImage("assets/food.jpg"),
+      "image": "assets/nf.png",
     },
     {
       "text": "Money",
-      "image": const AssetImage("assets/money.jpg"),
+      "image": "assets/nm.png",
     },
   ];
 
@@ -116,11 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         widget: isBright
                             ? const Icon(
                                 Icons.nights_stay_outlined,
-                                color: Colors.teal,
+                                color: themeColor,
                               )
                             : const Icon(
                                 Icons.sunny,
-                                color: Colors.teal,
+                                color: themeColor,
                               ),
                       ),
                     ),
@@ -131,27 +132,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const MyContainerImage(
                         widget: Icon(
                           Icons.person,
-                          color: Colors.teal,
+                          color: themeColor,
                         ),
                       ),
                     )
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: 200,
-                  height: 160,
-                  alignment: Alignment.bottomCenter,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage("assets/building.png"),
-                    ),
+              const Center(
+                child: CircleAvatar(
+                  radius: 90,
+                  backgroundImage: AssetImage(
+                    "assets/logo.png",
                   ),
-                  child: const Text(""),
                 ),
               ),
               const Gap(30),
@@ -173,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(color: Colors.black87),
                     decoration: const InputDecoration(
                         icon: Icon(Icons.search),
-                        iconColor: Colors.teal,
+                        iconColor: themeColor,
                         border: InputBorder.none,
                         hintText: "Search NGO's...",
                         hintStyle: TextStyle(
@@ -189,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   "Donate",
                   style: TextStyle(
-                      color: Colors.black,
+                      color: themeColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -202,11 +195,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: list.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () => navigateToNGO(icons[index]["icon"],
+                        onTap: () => navigateToNGO(list[index]["image"],
                             list[index]['text'].toString().toLowerCase()),
-                        child: MyDonate(
-                          text: list[index]["text"],
-                          image: icons[index]['icon'],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Image.asset(
+                            list[index]['image'],
+                            height: 70,
+                            width: 85,
+                          ),
                         ),
                       );
                     }),
@@ -220,14 +217,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "Donors",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: themeColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "See All",
                       style: TextStyle(
-                          color: Colors.teal,
+                          color: themeColor,
                           fontSize: 15,
                           fontWeight: FontWeight.w500),
                     ),

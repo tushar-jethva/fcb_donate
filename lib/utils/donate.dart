@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MyDonate extends StatelessWidget {
   final String text;
-  final AssetImage image;
+  final String image;
   const MyDonate({
     Key? key,
     required this.text,
@@ -14,13 +14,13 @@ class MyDonate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      height: 200,
+      height: 250,
       width: 200,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(30),
         ),
-        image: DecorationImage(image: image, fit: BoxFit.cover),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
       ),
       child: Container(
         decoration: BoxDecoration(

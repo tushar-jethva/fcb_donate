@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
           //     Color.fromARGB(255, 224, 95, 138)
           //   ],
           // ),
-          color: Color.fromARGB(255, 228, 186, 62)),
+          color: Color.fromARGB(255, 31, 64, 60)),
       child: Center(child: widget),
     );
   }

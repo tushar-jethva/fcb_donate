@@ -73,6 +73,7 @@ class _LoginState extends State<Login> {
                     icon: const Icon(
                       Icons.navigate_before,
                       size: 40,
+                      color: Colors.white,
                     ),
                   )),
                 ),
@@ -154,7 +155,7 @@ class _LoginState extends State<Login> {
                             child: CustomButton(
                               widget: isLogin
                                   ? const CircularProgressIndicator(
-                                      color: Colors.red,
+                                      color: Colors.white,
                                     )
                                   : const Text(
                                       "Login",
@@ -170,16 +171,26 @@ class _LoginState extends State<Login> {
                           ),
                           Row(
                             children: [
-                              const Text("Not have an Account?"),
+                              const Text(
+                                "Not have an Account?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 31, 64, 60)),
+                              ),
                               TextButton(
                                   onPressed: () {
                                     Navigator.pushNamedAndRemoveUntil(context,
                                         SignUp.routeName, (route) => false,
                                         arguments: widget.user);
                                   },
-                                  child: const Text("Sign Up"))
+                                  child: const Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 31, 64, 60),
+                                        fontWeight: FontWeight.bold),
+                                  ))
                             ],
-                          )
+                          ),
                         ]),
                       ),
                     ),
