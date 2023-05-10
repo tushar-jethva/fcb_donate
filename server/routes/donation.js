@@ -35,28 +35,38 @@ DonationRouter.post("/api/postDonation",async(req,res) => {
           console.log(user);
         res.json(donation);
     }catch(e){
-        res.status(500).json({err:e.message});
+        res.status(500).json({error:e.message});
     }
 });
 
 DonationRouter.get('/api/getAllRequests',async(req,res) => {
    try{
     const ngoId = req.query.id;
-    console.log(ngoId);
-    let donation = await DonationModel.find(ngoId)
-    console.log(donation)
+   
+    let donation = await DonationModel.find({ngoId})
+   
     let list =[];
     for(var i=0;i<donation.length;i++){
         if(donation[i].status == 0){
             list.push(donation[i]);
         }
     }
-    console.log(list);
+    
     res.json(list);
 
    }catch(e){
-    res.status(500).json({err:"not found"});
+    res.status(500).json({error:e.message});
    }
 });
+
+DonationRouter.get('/api/fetchNgoDonation',async(req,res) => {
+    try{
+        const ngoId = req.query.id;
+        let donations  = await DonationModel.find({ngoId});
+        res.json(donations);
+    }catch{
+        res.status(500).json({error:e.message})
+    }
+})
 
 module.exports = DonationRouter

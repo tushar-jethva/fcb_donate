@@ -25,7 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return widget.isPass
         ? TextFormField(
-            style:const  TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             validator: (val) {
               if (widget.hintText != "Mobile2" && val!.isEmpty || val == null) {
                 return 'Enter your ${widget.hintText}';
@@ -36,14 +36,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: isShow
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
+                      ? const Icon(
+                          Icons.visibility_off,
+                          color: Colors.black,
+                        )
+                      : const Icon(
+                          Icons.visibility,
+                          color: Colors.black,
+                        ),
                   onPressed: () {
                     setState(() {
                       isShow = !isShow;
                     });
                   },
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
+                floatingLabelStyle: TextStyle(color: Colors.black),
                 hintText: widget.hintText,
                 labelText: widget.hintText,
                 border: OutlineInputBorder(
@@ -63,7 +74,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             obscureText: false,
             decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
+                focusColor: Colors.white,
                 labelText: widget.hintText,
+                floatingLabelStyle: TextStyle(color: Colors.black),
                 hintText: widget.hintText,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),

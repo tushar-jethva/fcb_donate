@@ -73,5 +73,5 @@ default:0
 
  const DonationModel = mongoos.model("Donations",DonationSchema);
 
- module.exports = {DonationModel,DonationSchema};
+ module.exports = DonationModel;
  

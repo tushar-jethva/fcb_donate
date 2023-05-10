@@ -59,132 +59,145 @@ class _LoginState extends State<Login> {
                   begin: Alignment.topLeft,
                   end: Alignment.topRight),
             ),
-            child: Column(
+            child: Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 3, top: 3),
-                  alignment: Alignment.topLeft,
-                  child: SafeArea(
-                      child: IconButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, FirstScreen.routeName, (route) => false);
-                    },
-                    icon: const Icon(
-                      Icons.navigate_before,
-                      size: 40,
-                    ),
-                  )),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome back to FBC",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+                SizedBox(
+                  height: 280,
+                  child: Image.asset(
+                    "assets/logo.png",
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.white,
-                            offset: Offset.infinite,
-                            blurRadius: 2)
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                      ),
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 3, top: 3),
+                      alignment: Alignment.topLeft,
+                      child: SafeArea(
+                          child: IconButton(
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, FirstScreen.routeName, (route) => false);
+                        },
+                        icon: const Icon(
+                          Icons.navigate_before,
+                          size: 40,
+                        ),
+                      )),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Form(
-                        key: _loginkey,
-                        child: Column(children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextField(
-                              hintText: widget.user ? "Email" : "Username",
-                              controller: _emailController),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          CustomTextField(
-                            hintText: "Password",
-                            controller: _passwordController,
-                            isPass: true,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (_loginkey.currentState!.validate()) {
-                                loginUser(_emailController.text,
-                                    _passwordController.text);
-                              }
-                            },
-                            child: CustomButton(
-                              widget: isLogin
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.red,
-                                    )
-                                  : const Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                    Expanded(
+                      flex: 2,
+                      child: SafeArea(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            // Text(
+                            //   "Login",
+                            //   style: TextStyle(
+                            //       fontSize: 30,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Color.fromARGB(255, 216, 187, 21)),
+                            // ),
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const Text("Not have an Account?"),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamedAndRemoveUntil(context,
-                                        SignUp.routeName, (route) => false,
-                                        arguments: widget.user);
-                                  },
-                                  child: const Text("Sign Up"))
-                            ],
-                          )
-                        ]),
+                            Text(
+                              "Welcome back to FCB",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 206, 155, 4)),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
+                    Expanded(
+                      flex: 5,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.white,
+                                offset: Offset.infinite,
+                                blurRadius: 2)
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Form(
+                            key: _loginkey,
+                            child: Column(children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                  hintText: widget.user ? "Email" : "Username",
+                                  controller: _emailController),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                hintText: "Password",
+                                controller: _passwordController,
+                                isPass: true,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (_loginkey.currentState!.validate()) {
+                                    loginUser(_emailController.text,
+                                        _passwordController.text);
+                                  }
+                                },
+                                child: CustomButton(
+                                  widget: isLogin
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.red,
+                                        )
+                                      : const Text(
+                                          "Login",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  const Text("Not have an Account?"),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            SignUp.routeName,
+                                            (route) => false,
+                                            arguments: widget.user);
+                                      },
+                                      child: const Text("Sign Up"))
+                                ],
+                              )
+                            ]),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

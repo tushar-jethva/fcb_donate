@@ -1,3 +1,4 @@
+import 'package:fcb_donate/admin/bottombar.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
@@ -95,6 +96,9 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     case MyHomeNgoAdmin.routeName:
       return MaterialPageRoute(
           builder: (_) => const MyHomeNgoAdmin(), settings: routeSettings);
+    case MyBottomBar.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const MyBottomBar(), settings: routeSettings);
 
     default:
       return MaterialPageRoute(

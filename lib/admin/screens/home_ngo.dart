@@ -58,92 +58,88 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
     final ngoProvider = Provider.of<NgoProvider>(context, listen: false).ngo;
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: dark,
-                    child: MyContainerImage(
-                      widget: isBright
-                          ? const Icon(
-                              Icons.nights_stay_outlined,
-                              color: Colors.teal,
-                            )
-                          : const Icon(
-                              Icons.sunny,
-                              color: Colors.teal,
-                            ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: dark,
+                      child: MyContainerImage(
+                        widget: isBright
+                            ? const Icon(
+                                Icons.nights_stay_outlined,
+                                color: Colors.teal,
+                              )
+                            : const Icon(
+                                Icons.sunny,
+                                color: Colors.teal,
+                              ),
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MyRequestPage()));
-                    },
-                    child: const MyContainerImage(
+                    const MyContainerImage(
                       widget: Icon(
                         Icons.login_rounded,
                         color: Colors.teal,
                       ),
                     ),
+                  ],
+                ),
+                const Gap(50),
+                Container(
+                  height: 150,
+                  width: 150,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/ngo.jpg"), fit: BoxFit.cover),
+                    shape: BoxShape.circle,
                   ),
-                ],
-              ),
-              const Gap(50),
-              Container(
-                height: 150,
-                width: 150,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/ngo.jpg"), fit: BoxFit.cover),
-                  shape: BoxShape.circle,
                 ),
-              ),
-              const Gap(5),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Ngo Name",
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(color: Colors.black87, fontSize: 20),
+                const Gap(5),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Ngo Name",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.black87, fontSize: 20),
+                  ),
                 ),
-              ),
-              const Gap(50),
-              NgoRowDetails(
-                leftText: "Admin Name:",
-                rightText: ngoProvider.ngo_admin,
-              ),
-              const Gap(10),
-              NgoRowDetails(
-                leftText: "Contact Details:",
-                rightText: ngoProvider.mobile_no,
-              ),
-              const Gap(10),
-              NgoRowDetails(
-                leftText: "Area:",
-                rightText: ngoProvider.area,
-              ),
-              const Gap(10),
-              NgoRowDetails(
-                leftText: "City:",
-                rightText: ngoProvider.city,
-              ),
-              const Gap(10),
-              NgoRowDetails(
-                leftText: "Description:",
-                rightText: ngoProvider.description,
-              ),
-            ],
+                const Gap(50),
+                NgoRowDetails(
+                  leftText: "Admin Name:",
+                  rightText: ngoProvider.ngo_admin,
+                ),
+                const Gap(10),
+                NgoRowDetails(
+                  leftText: "Contact Details:",
+                  rightText: ngoProvider.mobile_no,
+                ),
+                const Gap(10),
+                NgoRowDetails(
+                  leftText: "Area:",
+                  rightText: ngoProvider.area,
+                ),
+                const Gap(10),
+                NgoRowDetails(
+                  leftText: "City:",
+                  rightText: ngoProvider.city,
+                ),
+                const Gap(10),
+                NgoRowDetails(
+                  leftText: "Description:",
+                  rightText: ngoProvider.description,
+                ),
+              ],
+            ),
           ),
         ),
       ),

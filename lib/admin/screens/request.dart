@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:fcb_donate/admin/screens/user_details.dart';
 import 'package:fcb_donate/admin/services/ngo_services.dart';
 import 'package:fcb_donate/admin/widgets/request_card.dart';
+import 'package:fcb_donate/utils/loader.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,11 +22,12 @@ class MyRequestPage extends StatefulWidget {
 
 class _MyRequestPageState extends State<MyRequestPage> {
   final NgoServices ngoServices = NgoServices();
-  List<Donation>? list;
+  List<Donation> list = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getDonorDetails();
   }
 
@@ -32,19 +36,18 @@ class _MyRequestPageState extends State<MyRequestPage> {
 
     list = await ngoServices.getDonorsDetails(id: provider.id);
     setState(() {});
-    print(list![0].category);
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: list!.isEmpty
-            ? Center(
+        body: list.isEmpty
+            ?const  Center(
                 child: Text("No Donation"),
               )
             : ListView.builder(
-                itemCount: list!.length,
+                itemCount: list.length,
                 padding: const EdgeInsets.all(15),
                 itemBuilder: (
                   context,
@@ -56,13 +59,13 @@ class _MyRequestPageState extends State<MyRequestPage> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => MyUserDetails(
-                                  donation: list![index],
+                                  donation: list[index],
                                 )));
                       },
                       child: MyRequestCard(
-                        donorName: list![index].userName,
-                        mobile_no: list![index].address,
-                        address: list![index].address,
+                        donorName: list[index].userName,
+                        mobile_no: list[index].address,
+                        address: list[index].address,
                       ),
                     ),
                   );

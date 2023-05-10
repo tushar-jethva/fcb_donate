@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fcb_donate/admin/bottombar.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
@@ -113,7 +114,10 @@ class AuthServices {
     pref.setString('x-auth-token', "");
     // ignore: use_build_context_synchronously
     Navigator.pushNamedAndRemoveUntil(
-        context, FirstScreen.routeName, (route) => false,);
+      context,
+      FirstScreen.routeName,
+      (route) => false,
+    );
   }
 
   singInNgo(
@@ -122,9 +126,7 @@ class AuthServices {
       required BuildContext context}) async {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/ngoLogin"),
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
-          },
+          headers: {'Content-Type': 'application/json;charset=UTF-8'},
           body: jsonEncode({'username': username, 'password': password}));
 
       httpErrorHandling(
@@ -135,7 +137,7 @@ class AuthServices {
                 Provider.of<NgoProvider>(context, listen: false);
             ngoProvider.ngoDetails(Ngo.fromMap(jsonDecode(res.body)));
             Navigator.pushNamedAndRemoveUntil(
-                context, MyHomeNgoAdmin.routeName, (route) => false);
+                context, MyBottomBar.routeName, (route) => false);
           });
     } catch (e) {
       GlobalSnakbar().showSnackbar(e.toString());
