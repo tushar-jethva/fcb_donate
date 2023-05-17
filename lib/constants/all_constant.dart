@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-String url = "http://192.168.8.230:3000";
+String url = "http://192.168.159.230:3000";
 
 class GlobalSnakbar {
   static GlobalKey<ScaffoldMessengerState> key =

@@ -1,3 +1,4 @@
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
@@ -55,9 +56,10 @@ class _LoginState extends State<Login> {
                 BoxConstraints(maxHeight: size.height, maxWidth: size.width),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.blue[800]!, Colors.blue[400]!],
-                  begin: Alignment.topLeft,
-                  end: Alignment.topRight),
+                colors: [themeColor, Color.fromARGB(236, 62, 126, 119)],
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+              ),
             ),
             child: Column(
               children: [
@@ -73,6 +75,7 @@ class _LoginState extends State<Login> {
                     icon: const Icon(
                       Icons.navigate_before,
                       size: 40,
+                      color: white,
                     ),
                   )),
                 ),
@@ -154,7 +157,7 @@ class _LoginState extends State<Login> {
                             child: CustomButton(
                               widget: isLogin
                                   ? const CircularProgressIndicator(
-                                      color: Colors.red,
+                                      color: Colors.white,
                                     )
                                   : const Text(
                                       "Login",
@@ -170,14 +173,24 @@ class _LoginState extends State<Login> {
                           ),
                           Row(
                             children: [
-                              const Text("Not have an Account?"),
+                              const Text(
+                                "Not have an Account?",
+                                style: TextStyle(
+                                    color: themeColor,
+                                    fontWeight: FontWeight.w500),
+                              ),
                               TextButton(
                                   onPressed: () {
                                     Navigator.pushNamedAndRemoveUntil(context,
                                         SignUp.routeName, (route) => false,
                                         arguments: widget.user);
                                   },
-                                  child: const Text("Sign Up"))
+                                  child: const Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        color: themeColor,
+                                        fontWeight: FontWeight.bold),
+                                  ))
                             ],
                           )
                         ]),

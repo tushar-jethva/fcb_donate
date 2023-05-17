@@ -12,11 +12,12 @@ import '../../provider/ngoprovider.dart';
 class NgoServices {
   Future<Ngo?> getNgoDetails({
     required BuildContext context,
+    required String id,
   }) async {
     Ngo? ngo;
     try {
       http.Response res = await http.get(
-        Uri.parse("$url/api/getNgoDetails"),
+        Uri.parse("$url/api/getNgoDetails?id=$id"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -74,13 +75,12 @@ class NgoServices {
           res: res,
           onSuccess: () {
             GlobalSnakbar().showSnackbar("Donation Accepted");
-            Navigator.pop(context);
           });
     } catch (e) {}
   }
 
   Future<void> declineDonation(
-      {required String donationId, required BuildContext context}) async {
+      {required String donationId, required BuildContext context,required VoidCallback onSuccess}) async {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/declineDonation"),
           headers: {
@@ -89,17 +89,15 @@ class NgoServices {
           body: jsonEncode({'donationId': donationId}));
       httpErrorHandling(
           res: res,
-          onSuccess: () {
-            GlobalSnakbar().showSnackbar("Donation Decline");
-            Navigator.pop(context);
-          });
+          onSuccess: onSuccess);
     } catch (e) {}
   }
 
   fetchAllDonations({required String ngoId}) async {
     List<Donation> donation = [];
     try {
-      http.Response res = await http.get(Uri.parse('$url/api/fetchNgoDonation?id=$ngoId'),
+      http.Response res = await http.get(
+          Uri.parse('$url/api/fetchAcceptedDonation?id=$ngoId'),
           headers: {'Content-type': 'application/json;charset=UTF-8'});
 
       httpErrorHandling(
@@ -117,5 +115,59 @@ class NgoServices {
       print(e.toString());
     }
     return donation;
+  }
+
+  fetchAcceptedDonation({
+    required String ngoId,
+  }) async {
+    List<Donation> list = [];
+    try {
+      http.Response res = await http.get(
+          Uri.parse("$url/api/fetchAcceptedDonation?ngoId=$ngoId"),
+          headers: <String, String>{
+            'Content-Type': 'application/json charset=UTF-8'
+          });
+
+      httpErrorHandling(
+          res: res,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(res.body).length; i++) {
+              list.add(Donation.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+            }
+          });
+    } catch (e) {
+      print(e.toString());
+    }
+    return list;
+  }
+
+  uploadReceipt({
+    required BuildContext context,
+    required String userId,
+    required String name,
+    required String mobile_no,
+    required String date,
+    required String time,
+    required int status,
+    required VoidCallback onSuccess,
+  }) async {
+    try {
+      http.Response res = await http.post(Uri.parse('$url/api/generateReceipt'),
+          body: jsonEncode({
+            "user_id": userId,
+            "ngo_name": name,
+            "ngo_number": mobile_no,
+            "date": date,
+            "time": time,
+            "status": status,
+          }),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+
+      httpErrorHandling(res: res, onSuccess: onSuccess);
+    } catch (e) {
+      print(e);
+    }
   }
 }

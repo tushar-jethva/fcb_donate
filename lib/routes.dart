@@ -1,13 +1,17 @@
 import 'package:fcb_donate/admin/bottombar.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
+import 'package:fcb_donate/admin/screens/receipt_from.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/ngo/screen/donation_form.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 import 'package:fcb_donate/features/super_admin/screens/details.dart';
+import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
+import 'package:fcb_donate/features/user/screens/notification_screen.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
+import 'package:fcb_donate/models/donation.dart';
 import 'package:flutter/material.dart';
 
 import 'features/auth/screens/login.dart';
@@ -15,7 +19,7 @@ import 'features/auth/screens/login.dart';
 import 'features/ngo/screen/ngo_list_screen.dart';
 
 import 'features/super_admin/screens/request_screen.dart';
-import 'features/super_admin/screens/super_form.dart';
+// import 'features/super_admin/screens/super_form.dart';
 import 'features/user/screens/registrationform.dart';
 import 'models/ngo.dart';
 
@@ -70,9 +74,9 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
               ),
           settings: routeSettings);
 
-    case AdminForm.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const AdminForm(), settings: routeSettings);
+    // case AdminForm.routeName:
+    //   return MaterialPageRoute(
+    //       builder: (_) => const AdminForm(), settings: routeSettings);
 
     case RequestScreen.routeName:
       return MaterialPageRoute(
@@ -99,6 +103,23 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     case MyBottomBar.routeName:
       return MaterialPageRoute(
           builder: (_) => const MyBottomBar(), settings: routeSettings);
+    case MyReceiptScreen.routeName:
+      Ngo ngo = routeSettings.arguments as Ngo;
+      Donation donation = routeSettings.arguments as Donation;
+      return MaterialPageRoute(
+          builder: (_) => MyReceiptScreen(
+                ngo: ngo,
+                donation: donation,
+              ),
+          settings: routeSettings);
+
+    case MyNotificationScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => MyNotificationScreen(), settings: routeSettings);
+    
+    case SuperAdminScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const SuperAdminScreen(), settings: routeSettings);
 
     default:
       return MaterialPageRoute(

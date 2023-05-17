@@ -3,6 +3,8 @@ import 'package:fcb_donate/admin/bottombar.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
+import 'package:fcb_donate/features/super_admin/screens/details.dart';
+import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:fcb_donate/models/ngo.dart';
 import 'package:fcb_donate/provider/ngoprovider.dart';
@@ -60,8 +62,13 @@ class AuthServices {
               Provider.of<UserProvider>(context, listen: false);
           userProvider.setUser(User.fromMap(jsonDecode(res.body)));
           // ignore: use_build_context_synchronously
-          Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.routeName, (route) => false);
+          var map = jsonDecode(res.body);
+          userProvider.user.type == 'user'
+              ?  Navigator.pushNamedAndRemoveUntil(
+                  context, HomeScreen.routeName, (route) => false)
+              :Navigator.pushNamedAndRemoveUntil(
+                  context, SuperAdminScreen.routeName, (route) => false);
+              
         },
       );
     } catch (e) {
@@ -84,6 +91,7 @@ class AuthServices {
           'Content-Type': 'application/json;charset=UTF-8'
         },
       );
+      print(res.body);
       // ignore: use_build_context_synchronously
       httpErrorHandling(
           res: res,

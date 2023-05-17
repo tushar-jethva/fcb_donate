@@ -164,8 +164,10 @@ class NgoDetailScreen extends StatelessWidget {
                   child: CustomButton(
                     widget: const Text(
                       "Donate",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white),
                     ),
                   ),
                 ),

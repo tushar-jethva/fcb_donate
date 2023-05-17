@@ -1,3 +1,4 @@
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/auth/screens/login.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
 import 'package:fcb_donate/utils/costom_textfield.dart';
@@ -48,13 +49,30 @@ class _SignUpState extends State<SignUp> {
           constraints:
               BoxConstraints(maxHeight: size.height, maxWidth: size.width),
           decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 161, 15, 149),
-              Color.fromARGB(255, 51, 40, 202)
-            ], begin: Alignment.topLeft, end: Alignment.topRight),
+            gradient: LinearGradient(
+              colors: [themeColor, Color.fromARGB(236, 62, 126, 119)],
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+            ),
           ),
-          child: Stack(
+          child: Column(
             children: [
+              Container(
+                padding: const EdgeInsets.only(left: 3, top: 3),
+                alignment: Alignment.topLeft,
+                child: SafeArea(
+                    child: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, FirstScreen.routeName, (route) => false);
+                  },
+                  icon: const Icon(
+                    Icons.navigate_before,
+                    size: 40,
+                    color: white,
+                  ),
+                )),
+              ),
               Expanded(
                 flex: 2,
                 child: SafeArea(
@@ -139,13 +157,13 @@ class _SignUpState extends State<SignUp> {
                           child: CustomButton(
                             widget: isSighup
                                 ? const CircularProgressIndicator(
-                                    color: Colors.red,
+                                    color: Colors.white,
                                   )
                                 : const Text(
                                     "Sign Up",
                                     style: TextStyle(
                                         fontSize: 16,
-                                        color: Colors.white,
+                                        color: white,
                                         fontWeight: FontWeight.bold),
                                   ),
                           ),
@@ -155,25 +173,45 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Row(
                           children: [
-                            const Text("Already have an Account?"),
+                            const Text(
+                              "Already have an Account?",
+                              style: TextStyle(
+                                  color: themeColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamedAndRemoveUntil(context,
-                                      Login.routeName, (route) => false,arguments: widget.user);
+                                      Login.routeName, (route) => false,
+                                      arguments: widget.user);
                                 },
-                                child: const Text("Login "))
+                                child: const Text(
+                                  "Login ",
+                                  style: TextStyle(
+                                      color: themeColor,
+                                      fontWeight: FontWeight.bold),
+                                ))
                           ],
                         ),
-                        const Gap(10),
                         Row(
                           children: [
-                            const Text("Want to Register your Ngo?"),
+                            const Text(
+                              "Want to Register your Ngo?",
+                              style: TextStyle(
+                                  color: themeColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
                                       context, MySuperForm.routeName);
                                 },
-                                child: const Text("Ngo Registration"))
+                                child: const Text(
+                                  "Ngo Registration",
+                                  style: TextStyle(
+                                      color: themeColor,
+                                      fontWeight: FontWeight.bold),
+                                ))
                           ],
                         )
                       ]),

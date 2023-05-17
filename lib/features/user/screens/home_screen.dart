@@ -1,4 +1,5 @@
 import 'package:fcb_donate/constants/colors.dart';
+import 'package:fcb_donate/features/user/screens/notification_screen.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -112,18 +113,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: dark,
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, MyNotificationScreen.routeName);
+                      },
                       child: MyContainerImage(
-                        widget: isBright
-                            ? const Icon(
-                                Icons.nights_stay_outlined,
-                                color: themeColor,
-                              )
-                            : const Icon(
-                                Icons.sunny,
-                                color: themeColor,
-                              ),
-                      ),
+                          widget: Icon(
+                        Icons.notifications,
+                        color: themeColor,
+                      )),
                     ),
                     InkWell(
                       onTap: () {

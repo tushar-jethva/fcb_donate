@@ -2,8 +2,8 @@ const mongoos = require("mongoose");
 
  DonationSchema =   mongoos.Schema({
   ngoId:{
-type:String,
-require:true,
+    type:String,
+    require:true,
   },
   status:{
 type:Number,

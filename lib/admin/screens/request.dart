@@ -40,12 +40,11 @@ class _MyRequestPageState extends State<MyRequestPage> {
 
   @override
   Widget build(BuildContext context) {
+    var ngo = Provider.of<NgoProvider>(context, listen: false).ngo;
     return SafeArea(
       child: Scaffold(
         body: list.isEmpty
-            ?const  Center(
-                child: Text("No Donation"),
-              )
+            ? Center(child: Text("No Requests"))
             : ListView.builder(
                 itemCount: list.length,
                 padding: const EdgeInsets.all(15),
@@ -59,7 +58,9 @@ class _MyRequestPageState extends State<MyRequestPage> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => MyUserDetails(
+                                  ngo:ngo,
                                   donation: list[index],
+                                  isCompleted: false,
                                 )));
                       },
                       child: MyRequestCard(

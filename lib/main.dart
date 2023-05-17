@@ -1,3 +1,4 @@
+import 'package:fcb_donate/admin/screens/completed.dart';
 import 'package:fcb_donate/constants/all_constant.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 
@@ -10,6 +11,7 @@ import 'package:fcb_donate/routes.dart';
 import 'package:fcb_donate/splash_screen/splash_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'admin/screens/home_ngo.dart';
@@ -17,7 +19,9 @@ import 'features/user/screens/home_screen.dart';
 
 void main() {
   //hi i am tushargit bra
-  runApp(MultiProvider(
+  
+  runApp(
+    MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NgoProvider()),
       ChangeNotifierProvider(create: (_) => UserProvider())
@@ -45,39 +49,35 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        scaffoldMessengerKey: GlobalSnakbar.key,
-        debugShowCheckedModeBanner: false,
-        title: 'FBC',
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 244, 244, 244),
-          appBarTheme: const AppBarTheme(
-              color: Color.fromARGB(255, 244, 244, 244),
-              elevation: 0,
-              iconTheme: IconThemeData(color: Colors.black87)),
-          textTheme: const TextTheme(
-              titleLarge: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-              titleMedium: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500),
-              titleSmall: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400)),
-        ),
-        onGenerateRoute: (settings) => generateRoutes(settings),
-        // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-        //     ? Provider.of<UserProvider>(context).user.type == 'admin'
-        //         ? const MyHomeNgoAdmin()
-        //         : Provider.of<UserProvider>(context).user.type == 'user'
-        //             ? const MyHomeNgoAdmin()
-        //             : const SuperAdminScreen()
-        //     : const SignUp()
+      scaffoldMessengerKey: GlobalSnakbar.key,
+      debugShowCheckedModeBanner: false,
+      title: 'FBC',
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 244, 244, 244),
+        appBarTheme: const AppBarTheme(
+            color: Color.fromARGB(255, 244, 244, 244),
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.black87)),
+        textTheme: const TextTheme(
+            titleLarge: TextStyle(
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            titleMedium: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+            titleSmall: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w400)),
+      ),
+      onGenerateRoute: (settings) => generateRoutes(settings),
+      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+      //     ? Provider.of<UserProvider>(context).user.type == 'admin'
+      //         ? const MyHomeNgoAdmin()
+      //         : Provider.of<UserProvider>(context).user.type == 'user'
+      //             ? const MyHomeNgoAdmin()
+      //             : const SuperAdminScreen()
+      //     : const SignUp()
 
-        home: const SplashScreen(),
-        );
+      home: const SplashScreen(),
+    );
   }
 }

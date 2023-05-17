@@ -91,7 +91,7 @@ NgoRouter.get("/api/getNgoByCity",async(req,res)=>{
 //get ngo details
 NgoRouter.get("/api/getNgoDetails",async(req,res)=>{
     try{
-        let name = req.query.id;
+        let id = req.query.id;
         let findNgo = await NGOModel.findById(id);
         if(!findNgo){
             return res.status(400).json({msg:"No NGO found for this name!"});
@@ -179,37 +179,28 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
     NgoRouter.post('/api/acceptDonation',async(req,res) => {
         try{
             const {donationId}= req.body;
-            // console.log(donationId);
             let donation = await DonationModel.findById(donationId);
-            
-        //    console.log(donation)
-
             if(donation.status != 0){
                 return res.status(400).json({msg:'Donation is already Visited'})
             }
-            
-            donation.status=1;
-            
-            await donation.save()
+            donation = await DonationModel.findByIdAndUpdate(donationId,{status:1},{new:true});
             res.json({msg:"Donation accepted"})
         }catch(e){
             res.status(500).json({error:e.message})
             console.log(e.message);
         }
-    })
+    });
 
 
     NgoRouter.post('/api/declineDonation',async(req,res) => {
         try{
             const {donationId}=req.body;
-            let donation = await DonationModel.findById(donationId);
-            donation.status = 2;
-            console.log(donation)
-            await donation.save();
+            let donation = await DonationModel.findByIdAndUpdate(donationId,{status:2},{new:true});
+            //console.log(donation);
             res.json({msg:"Donation declined"})
         }catch(e){
             res.status(500).json({error:e.message})
         }
-    })
+    });
 
 module.exports = NgoRouter;

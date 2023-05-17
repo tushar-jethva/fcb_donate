@@ -6,8 +6,6 @@ import 'package:gap/gap.dart';
 
 import 'ngorowdetails.dart';
 
-
-
 class MyRequestCard extends StatelessWidget {
   final String donorName;
   final String mobile_no;
@@ -39,11 +37,11 @@ class MyRequestCard extends StatelessWidget {
             ),
           ),
           Gap(30),
-          NgoRowDetails(leftText: "DonorName:", rightText: donorName),
+          NgoRowDetails(leftText: "DonorName", rightText: donorName),
           const Gap(5),
-          NgoRowDetails(leftText: "MobileNo:", rightText: mobile_no),
+          NgoRowDetails(leftText: "MobileNo", rightText: mobile_no),
           const Gap(5),
-          NgoRowDetails(leftText: "Address:", rightText: address),
+          NgoRowDetails(leftText: "Address", rightText: address),
           const Gap(5),
         ],
       ),

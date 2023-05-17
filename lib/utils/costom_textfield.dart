@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -36,15 +37,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: isShow
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
+                      ? const Icon(
+                          Icons.visibility_off,
+                          color: themeColor,
+                        )
+                      : const Icon(
+                          Icons.visibility,
+                          color: themeColor,
+                        ),
                   onPressed: () {
                     setState(() {
                       isShow = !isShow;
                     });
                   },
                 ),
-                hintText: widget.hintText,
                 labelText: widget.hintText,
                 labelStyle: TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
                 floatingLabelStyle:
@@ -76,14 +82,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             obscureText: false,
             decoration: InputDecoration(
+                labelStyle: TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
+                floatingLabelStyle:
+                    TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
                 labelText: widget.hintText,
-                hintText: widget.hintText,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
                       const BorderSide(color: Color.fromARGB(255, 31, 64, 60)),
                 ),
                 border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide:
+                      const BorderSide(color: Color.fromARGB(255, 31, 64, 60)),
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:
                       const BorderSide(color: Color.fromARGB(255, 31, 64, 60)),

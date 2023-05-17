@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
+import 'package:fcb_donate/features/auth/services/auth_services.dart';
+import 'package:fcb_donate/features/super_admin/screens/details.dart';
+import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -18,22 +21,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  AuthServices services = AuthServices();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    services.getUserData(context: context);
     Timer(Duration(seconds: 3), () {
+      print("another");
       another();
     });
   }
 
-  another() {
+  void another() {
+    var p = Provider.of<UserProvider>(context, listen: false).user;
+    print("token is $p");
+    print("user is ${p.type}");
     Provider.of<UserProvider>(context, listen: false).user.token.isNotEmpty
         ? Provider.of<UserProvider>(context, listen: false).user.type == 'user'
             ? Navigator.pushNamedAndRemoveUntil(
                 context, HomeScreen.routeName, (route) => false)
-            : Navigator.pushNamedAndRemoveUntil(
-                context, FirstScreen.routeName, (route) => false)
+            : Provider.of<UserProvider>(context, listen: false).user.type ==
+                    'super'
+                ? Navigator.pushNamedAndRemoveUntil(
+                    context, SuperAdminScreen.routeName, (route) => false)
+                : Navigator.pushNamedAndRemoveUntil(
+                    context, FirstScreen.routeName, (route) => false)
         : Navigator.pushNamedAndRemoveUntil(
             context, FirstScreen.routeName, (route) => false);
   }

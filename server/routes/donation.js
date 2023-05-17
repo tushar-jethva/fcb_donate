@@ -4,6 +4,7 @@ const express = require("express");
 const DonationModel = require("../models/donation");
 
 const UserModel = require("../models/auth");
+const ReceiptModel = require("../models/receipt");
 const DonationRouter = express.Router();
 
 DonationRouter.post("/api/postDonation",async(req,res) => {
@@ -29,9 +30,9 @@ DonationRouter.post("/api/postDonation",async(req,res) => {
         );
         donation =await donation.save();
         
-        let user =await  UserModel.findById(userId);
-         user.totalDonation =  user.totalDonation+1;
-          user = await user.save();
+        let user =await  UserModel.findByIdAndUpdate(userId,{totalDonation:user.totalDonation+1},{new:true});
+        //  user.totalDonation =  user.totalDonation+1;
+        //   user = await user.save();
           console.log(user);
         res.json(donation);
     }catch(e){
@@ -59,14 +60,42 @@ DonationRouter.get('/api/getAllRequests',async(req,res) => {
    }
 });
 
-DonationRouter.get('/api/fetchNgoDonation',async(req,res) => {
+DonationRouter.get('/api/fetchAcceptedDonation',async(req,res) => {
     try{
-        const ngoId = req.query.id;
-        let donations  = await DonationModel.find({ngoId});
-        res.json(donations);
-    }catch{
+        const ngoId = req.query.ngoId;
+        let donations  = await DonationModel.find({ngoId})
+        let list=[];
+        for(let i=0;i<donations.length;i++){
+            if(donations[i].status == 1){
+                list.push(donations[i]);
+            }
+        }
+        res.json(list);
+    }catch(e){
         res.status(500).json({error:e.message})
     }
+});
+
+DonationRouter.post('/api/generateReceipt',async(req,res)=>{
+    const{user_id,ngo_name,ngo_number,date,time,status} = req.body;
+
+    let receipt = new ReceiptModel({
+        user_id,
+        ngo_name,
+        ngo_number,
+        date,
+        time,
+        status
+    });
+
+    receipt = await receipt.save();
+    res.json(receipt);  
+});
+
+DonationRouter.get('/api/getAllReceipts',async(req,res)=>{
+    const user_id = req.query.user_id;
+    let receipts = await ReceiptModel.find({user_id});
+    res.json(receipts);
 })
 
 module.exports = DonationRouter

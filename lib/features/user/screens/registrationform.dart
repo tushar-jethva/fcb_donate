@@ -1,4 +1,5 @@
 import 'package:fcb_donate/constants/all_constant.dart';
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
 import 'package:fcb_donate/features/super_admin/service/super_admin_service.dart';
 import 'package:fcb_donate/models/ngo.dart';
@@ -268,7 +269,11 @@ class _MySuperFormState extends State<MySuperForm> {
                           }
                         },
                         child: CustomButton(
-                          widget: const Text("Register"),
+                          widget: const Text(
+                            "Register",
+                            style: TextStyle(
+                                color: white, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                       const Gap(20),
@@ -279,7 +284,10 @@ class _MySuperFormState extends State<MySuperForm> {
             ),
           ),
           isLoad
-              ? Positioned(top: size.height * 0.5, right: size.width * 0.5, child: const Loader())
+              ? Positioned(
+                  top: size.height * 0.5,
+                  right: size.width * 0.5,
+                  child: const Loader())
               : const SizedBox.shrink()
         ],
       ),

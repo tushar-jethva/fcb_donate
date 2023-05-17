@@ -1,3 +1,4 @@
+import 'package:fcb_donate/admin/screens/completed.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
 import 'package:fcb_donate/admin/screens/request.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _MyBottomBar extends State<MyBottomBar> {
   List<Widget> list = const [
     MyHomeNgoAdmin(),
     MyRequestPage(),
-    Text("Response"),
+    MyCompletedDonation(),
   ];
 
   void currentPage(int index) {

@@ -1,3 +1,4 @@
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/auth/screens/login.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,9 @@ class FirstScreen extends StatelessWidget {
                           child: const Text(
                             "User",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 255, 192, 55),
+                                color: white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 19),
                           ),
                         ),
                       ),
@@ -59,7 +60,7 @@ class FirstScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, Login.routeName,
-                              arguments: true);
+                              arguments: false);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -72,9 +73,9 @@ class FirstScreen extends StatelessWidget {
                           child: const Text(
                             "NGO",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 255, 192, 55),
+                                color: white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 19),
                           ),
                         ),
                       ),

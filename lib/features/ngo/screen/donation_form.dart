@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
@@ -189,20 +190,22 @@ class _DonationFormState extends State<DonationForm> {
                       List<String> urls = await NgoService().getImagesUrl(
                           images: images!, name: widget.ngo.ngo_name);
                       Donation donation = Donation(
-                          ngoId: widget.ngo.id,
-                          userId: user.id,
-                          donationId: "",
-                          ngoName: widget.ngo.ngo_name,
-                          category: " ",
-                          userName: _nameController.text,
-                          description: _description.text,
-                          images: urls,
-                          address: _address.text,
-                          pincode: _pincode.text,
-                          city: _city.text,
-                          state: _state.text,
-                          mobile1: _mobile1.text,
-                          mobile2: _mobile2.text);
+                        ngoId: widget.ngo.id,
+                        userId: user.id,
+                        donationId: "",
+                        ngoName: widget.ngo.ngo_name,
+                        category: " ",
+                        userName: _nameController.text,
+                        description: _description.text,
+                        images: urls,
+                        address: _address.text,
+                        pincode: _pincode.text,
+                        city: _city.text,
+                        state: _state.text,
+                        mobile1: _mobile1.text,
+                        mobile2: _mobile2.text,
+                        status: 0,
+                      );
 
                       await NgoService().postDonation(donation, context);
                     }
@@ -218,7 +221,8 @@ class _DonationFormState extends State<DonationForm> {
                         ? const Loader()
                         : Text(
                             "Submit",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: white),
                           )),
               )
             ],

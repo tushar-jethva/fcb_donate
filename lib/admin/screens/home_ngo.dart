@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:fcb_donate/admin/screens/request.dart';
+import 'package:fcb_donate/constants/colors.dart';
+import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/provider/ngoprovider.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:fcb_donate/utils/container_image.dart';
@@ -27,16 +29,13 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
   @override
   void initState() {
     super.initState();
-    print("hi");
     getNgoDetails();
   }
 
   Ngo? ngo;
   void getNgoDetails() async {
-    final user = Provider.of<UserProvider>(context).user;
-    ngo = await ngoServices.getNgoDetails(
-      context: context,
-    );
+    var ngos = Provider.of<NgoProvider>(context, listen: false).ngo;
+    ngo = await ngoServices.getNgoDetails(context: context, id: ngos.id);
     setState(() {});
   }
 
@@ -75,18 +74,24 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
                         widget: isBright
                             ? const Icon(
                                 Icons.nights_stay_outlined,
-                                color: Colors.teal,
+                                color: themeColor,
                               )
                             : const Icon(
                                 Icons.sunny,
-                                color: Colors.teal,
+                                color: themeColor,
                               ),
                       ),
                     ),
-                    const MyContainerImage(
-                      widget: Icon(
-                        Icons.login_rounded,
-                        color: Colors.teal,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, FirstScreen.routeName, (route) => false);
+                      },
+                      child: const MyContainerImage(
+                        widget: Icon(
+                          Icons.login_rounded,
+                          color: themeColor,
+                        ),
                       ),
                     ),
                   ],
@@ -106,7 +111,7 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Ngo Name",
+                    ngoProvider.username,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -115,27 +120,27 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
                 ),
                 const Gap(50),
                 NgoRowDetails(
-                  leftText: "Admin Name:",
+                  leftText: "Admin Name",
                   rightText: ngoProvider.ngo_admin,
                 ),
                 const Gap(10),
                 NgoRowDetails(
-                  leftText: "Contact Details:",
+                  leftText: "Contact Details",
                   rightText: ngoProvider.mobile_no,
                 ),
                 const Gap(10),
                 NgoRowDetails(
-                  leftText: "Area:",
+                  leftText: "Area",
                   rightText: ngoProvider.area,
                 ),
                 const Gap(10),
                 NgoRowDetails(
-                  leftText: "City:",
+                  leftText: "City",
                   rightText: ngoProvider.city,
                 ),
                 const Gap(10),
                 NgoRowDetails(
-                  leftText: "Description:",
+                  leftText: "Description",
                   rightText: ngoProvider.description,
                 ),
               ],

@@ -18,6 +18,7 @@ class Donation {
   final String city;
   final String state;
   final String ngoId;
+  final int status;
   Donation({
     required this.donationId,
     required this.userId,
@@ -33,6 +34,7 @@ class Donation {
     required this.city,
     required this.state,
     required this.ngoId,
+    required this.status,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,13 +52,13 @@ class Donation {
       'pincode': pincode,
       'city': city,
       'state': state,
-      'ngoId':ngoId
+      'ngoId': ngoId,
+      'status': status,
     };
   }
 
   factory Donation.fromMap(Map<String, dynamic> map) {
     return Donation(
-      ngoId: map['ngoId'] as String,
       donationId: map['_id'] as String,
       userId: map['userId'] as String,
       ngoName: map['ngoName'] as String,
@@ -70,6 +72,8 @@ class Donation {
       pincode: map['pincode'] as String,
       city: map['city'] as String,
       state: map['state'] as String,
+      ngoId: map['ngoId'] as String,
+      status: map['status'] as int,
     );
   }
 

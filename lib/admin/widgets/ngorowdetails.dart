@@ -16,12 +16,12 @@ class NgoRowDetails extends StatelessWidget {
       children: [
         Text(
           "$leftText:",
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
         ),
         Expanded(
           child: Text(
-            rightText,
-            style: const TextStyle(color: Colors.grey),
+            "  $rightText",
+            style: const TextStyle(color: Colors.grey, fontSize: 17),
           ),
         )
       ],

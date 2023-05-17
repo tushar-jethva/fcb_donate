@@ -15,7 +15,7 @@ authRouter.post('/api/ngoLogin' , async(req,res) => {
         if(!existNgo){
             return res.status(400).json({msg:"Ngo with this username in not Exist"});
         }
-        let ngo = await Ngo.findOne({username});
+        let ngo = await Ngo.findOne({username,password});
         res.json(ngo);
     }catch(e){
         res.status(500).json({error:e.message});

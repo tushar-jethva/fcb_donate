@@ -1,18 +1,17 @@
-import 'dart:developer';
-
+import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 import 'package:fcb_donate/features/super_admin/screens/details.dart';
 import 'package:fcb_donate/features/super_admin/screens/request_screen.dart';
-import 'package:fcb_donate/features/super_admin/screens/super_form.dart';
+// import 'package:fcb_donate/features/super_admin/screens/super_form.dart';
 import 'package:fcb_donate/features/super_admin/service/super_admin_service.dart';
 import 'package:fcb_donate/utils/loader.dart';
 import 'package:fcb_donate/utils/ngo_card.dart';
 import 'package:fcb_donate/utils/see_ngo.dart';
 import 'package:flutter/material.dart';
-
 import '../../../models/ngo.dart';
 
 class SuperAdminScreen extends StatefulWidget {
+  static const routeName = "/super";
   const SuperAdminScreen({super.key});
 
   @override
@@ -50,7 +49,13 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
               onPressed: () {
                 Navigator.pushNamed(context, RequestScreen.routeName);
               },
-              child: Text("Request"))
+              child: Text("Request")),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, FirstScreen.routeName, (route) => false);
+              },
+              icon: Icon(Icons.logout)),
         ],
       ),
       body: allNgo == null
@@ -78,13 +83,6 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
                 },
               ),
             ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Navigator.pushNamed(context, AdminForm.routeName);
-      //     SuperService().addTempNgo(ngo: allNgo![0], context: context);
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
