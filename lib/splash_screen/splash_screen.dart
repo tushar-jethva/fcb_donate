@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Opacity(
           opacity: 0.5,
           child: Scaffold(
-              backgroundColor: Color.fromARGB(255, 5, 27, 3),
+              backgroundColor: const Color.fromARGB(255, 5, 27, 3),
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Positioned(
           bottom: 200,
           left: MediaQuery.of(context).size.width * 0.45,
-          child: Loader(),
+          child: const Loader(),
         )
       ],
     );

@@ -56,25 +56,66 @@ class NgoServices {
           );
         }
       }
-      print(list);
     } catch (e) {
       print(e);
     }
     return list;
   }
 
-  acceptDonation({required String ngoId,}) async {
+  Future<void> acceptDonation(
+      {required String donationId, required BuildContext context}) async {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/acceptDonation"),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode({'ngoId': ngoId}));
+          body: jsonEncode({'donationId': donationId}));
       httpErrorHandling(
           res: res,
           onSuccess: () {
             GlobalSnakbar().showSnackbar("Donation Accepted");
+            Navigator.pop(context);
           });
     } catch (e) {}
+  }
+
+  Future<void> declineDonation(
+      {required String donationId, required BuildContext context}) async {
+    try {
+      http.Response res = await http.post(Uri.parse("$url/api/declineDonation"),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({'donationId': donationId}));
+      httpErrorHandling(
+          res: res,
+          onSuccess: () {
+            GlobalSnakbar().showSnackbar("Donation Decline");
+            Navigator.pop(context);
+          });
+    } catch (e) {}
+  }
+
+  fetchAllDonations({required String ngoId}) async {
+    List<Donation> donation = [];
+    try {
+      http.Response res = await http.get(Uri.parse('$url/api/fetchNgoDonation?id=$ngoId'),
+          headers: {'Content-type': 'application/json;charset=UTF-8'});
+
+      httpErrorHandling(
+          res: res,
+          onSuccess: () {
+            for (var i = 0; i < jsonDecode(res.body).length; i++) {
+              donation.add(
+                Donation.fromJson(
+                  jsonEncode(jsonDecode(res.body)[i]),
+                ),
+              );
+            }
+          });
+    } catch (e) {
+      print(e.toString());
+    }
+    return donation;
   }
 }

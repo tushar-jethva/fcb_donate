@@ -36,20 +36,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
             decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: isShow
-                      ? const Icon(
-                          Icons.visibility_off,
-                          color: Color.fromARGB(255, 31, 64, 60),
-                        )
-                      : const Icon(
-                          Icons.visibility,
-                          color: Color.fromARGB(255, 31, 64, 60),
-                        ),
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.visibility),
                   onPressed: () {
                     setState(() {
                       isShow = !isShow;
                     });
                   },
                 ),
+                hintText: widget.hintText,
                 labelText: widget.hintText,
                 labelStyle: TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
                 floatingLabelStyle:
@@ -81,15 +76,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             obscureText: false,
             decoration: InputDecoration(
-                labelStyle: TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
                 labelText: widget.hintText,
-                floatingLabelStyle:
-                    TextStyle(color: Color.fromARGB(255, 31, 64, 60)),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: Color.fromARGB(255, 31, 64, 60)),
-                ),
+                hintText: widget.hintText,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide:

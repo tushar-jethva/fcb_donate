@@ -6,7 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
-
+  static const routeName = '/bottom';
   @override
   State<MyBottomBar> createState() => _MyBottomBar();
 }

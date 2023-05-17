@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 
 import '../../../utils/button.dart';
 import '../../user/screens/registrationform.dart';
+import 'first_screen.dart';
 
 class SignUp extends StatefulWidget {
   static const routeName = "/signup";
@@ -52,24 +53,8 @@ class _SignUpState extends State<SignUp> {
               Color.fromARGB(255, 51, 40, 202)
             ], begin: Alignment.topLeft, end: Alignment.topRight),
           ),
-          child: Column(
+          child: Stack(
             children: [
-              Container(
-                padding: const EdgeInsets.only(left: 3, top: 3),
-                alignment: Alignment.topLeft,
-                child: SafeArea(
-                    child: IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, Login.routeName,
-                        arguments: true);
-                  },
-                  icon: const Icon(
-                    Icons.navigate_before,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                )),
-              ),
               Expanded(
                 flex: 2,
                 child: SafeArea(
@@ -154,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                           child: CustomButton(
                             widget: isSighup
                                 ? const CircularProgressIndicator(
-                                    color: Colors.white,
+                                    color: Colors.red,
                                   )
                                 : const Text(
                                     "Sign Up",
@@ -170,43 +155,25 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Row(
                           children: [
-                            const Text("Already have an Account?",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromARGB(255, 31, 64, 60))),
+                            const Text("Already have an Account?"),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamedAndRemoveUntil(context,
-                                      Login.routeName, (route) => false,
-                                      arguments: widget.user);
+                                      Login.routeName, (route) => false,arguments: widget.user);
                                 },
-                                child: const Text(
-                                  "Login ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 31, 64, 60)),
-                                ))
+                                child: const Text("Login "))
                           ],
                         ),
+                        const Gap(10),
                         Row(
                           children: [
-                            const Text(
-                              "Want to Register your Ngo?",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 31, 64, 60)),
-                            ),
+                            const Text("Want to Register your Ngo?"),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
                                       context, MySuperForm.routeName);
                                 },
-                                child: const Text(
-                                  "Ngo Registration",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 31, 64, 60)),
-                                ))
+                                child: const Text("Ngo Registration"))
                           ],
                         )
                       ]),
