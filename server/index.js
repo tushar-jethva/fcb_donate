@@ -12,9 +12,11 @@ app.use(express.json());
 app.use(authRouter);
 app.use(ngoRouter);
 app.use(DonationRouter);
-app.get("/fake",(req,res) => {
-    res.json({'name':'vipendrasinh'});
+
+app.get('/',(req,res)=>{
+    res.send("Welcome to FCB Donation!");
 })
+
 mongoose.
 connect(DB).
 then(()=>{
