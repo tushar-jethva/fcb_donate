@@ -125,12 +125,12 @@ class _MyNotificationScreenState extends State<MyNotificationScreen> {
           : ListView.builder(
               itemCount: list!.length,
               itemBuilder: (context, index) {
-                if (list![index].status == 1) {
+                if (list![list!.length - index - 1].status == 1) {
                   return InkWell(
                     onTap: () {
                       openDialog(
-                          date: list![index].date,
-                          time: list![index].time,
+                          date: list![list!.length - index - 1].date,
+                          time: list![list!.length - index - 1].time,
                           isAccepted: true,
                           ngo_name: list![index].ngo_name);
                     },
@@ -139,7 +139,7 @@ class _MyNotificationScreenState extends State<MyNotificationScreen> {
                           vertical: 7, horizontal: 15),
                       child: MyNotiCard(
                         isDeclined: false,
-                        ngoName: list![index].ngo_name,
+                        ngoName: list![list!.length - index - 1].ngo_name,
                       ),
                     ),
                   );
@@ -147,14 +147,15 @@ class _MyNotificationScreenState extends State<MyNotificationScreen> {
                   return InkWell(
                     onTap: () {
                       openDialog(
-                          isAccepted: false, ngo_name: list![index].ngo_name);
+                          isAccepted: false,
+                          ngo_name: list![list!.length - index - 1].ngo_name);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 7, horizontal: 15),
                       child: MyNotiCard(
                         isDeclined: true,
-                        ngoName: list![index].ngo_name,
+                        ngoName: list![list!.length - index - 1].ngo_name,
                       ),
                     ),
                   );

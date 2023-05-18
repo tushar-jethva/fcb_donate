@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -11,6 +12,7 @@ import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
 import 'package:fcb_donate/utils/button.dart';
 import 'package:fcb_donate/utils/loader.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/all_constant.dart';
 import '../../models/donation.dart';
@@ -34,7 +36,35 @@ class MyUserDetails extends StatefulWidget {
 
 class _MyUserDetailsState extends State<MyUserDetails> {
   TextEditingController addDateController = TextEditingController();
-  bool isLoad = true;
+  bool isLoad = false;
+  final NgoServices ngoServices = NgoServices();
+
+  callApis() async {
+    setState(() {
+      isLoad = true;
+    });
+    await ngoServices.declineDonation(
+        userId: widget.donation.userId,
+        donationId: widget.donation.donationId,
+        context: context,
+        onSuccess: () {
+          GlobalSnakbar().showSnackbar("Donation Declined!");
+        });
+    await ngoServices.uploadReceipt(
+        context: context,
+        userId: widget.donation.userId,
+        name: widget.ngo.ngo_name,
+        mobile_no: widget.ngo.mobile_no,
+        date: " ",
+        time: " ",
+        status: 2,
+        onSuccess: () {
+          Navigator.pop(context);
+        });
+    setState(() {
+      isLoad = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,37 +151,7 @@ class _MyUserDetailsState extends State<MyUserDetails> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isLoad = false;
-                                  });
-                                  NgoServices().declineDonation(
-                                      context: context,
-                                      donationId: widget.donation.donationId,
-                                      onSuccess: () {
-                                        GlobalSnakbar()
-                                            .showSnackbar("Donation Decline");
-                                        Navigator.pop(context);
-                                        setState(() {
-                                          print('set state');
-                                        });
-                                      });
-                                  setState(() {
-                                    print('set state2');
-                                  });
-                                  // await NgoServices().uploadReceipt(
-                                  //     context: context,
-                                  //     userId: widget.donation.userId,
-                                  //     name: widget.ngo.ngo_name,
-                                  //     mobile_no: widget.ngo.mobile_no,
-                                  //     date: " ",
-                                  //     time: " ",
-                                  //     status: 2,
-                                  //     onSuccess: () {
-
-                                  //       setState(() {
-
-                                  //       });
-                                  //     });
+                                  callApis();
                                 },
                                 child: Container(
                                   height: 45,
@@ -159,13 +159,15 @@ class _MyUserDetailsState extends State<MyUserDetails> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.red),
-                                  child: const Center(
-                                      child: Text(
-                                    "Decline",
-                                    style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                                  child: isLoad
+                                      ? const Loader()
+                                      : Center(
+                                          child: Text(
+                                          "Decline",
+                                          style: TextStyle(
+                                              color: white,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                 ),
                               ),
                               InkWell(

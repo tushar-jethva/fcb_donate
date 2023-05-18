@@ -28,8 +28,12 @@ class MyNotiCard extends StatelessWidget {
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: AssetImage("assets/logo.png"), fit: BoxFit.cover)),
+              image: isDeclined
+                  ? DecorationImage(
+                      image: AssetImage("assets/redlogo.png"),
+                      fit: BoxFit.cover)
+                  : DecorationImage(
+                      image: AssetImage("assets/logo.png"), fit: BoxFit.cover)),
         ),
         title: isDeclined
             ? Text(

@@ -1,6 +1,7 @@
 const express = require('express');
 const NGOModel = require('../models/ngo_models');
 const NgoRouter = express.Router();
+const User = require('../models/auth');
 const TempNGOModel = require('../models/temp_ngo');
 const  DonationModel = require('../models/donation');
 NgoRouter.post("/api/addNgo",async(req,res)=>{
@@ -178,12 +179,14 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
 
     NgoRouter.post('/api/acceptDonation',async(req,res) => {
         try{
-            const {donationId}= req.body;
+            const {donationId,userId}= req.body;
             let donation = await DonationModel.findById(donationId);
             if(donation.status != 0){
                 return res.status(400).json({msg:'Donation is already Visited'})
             }
             donation = await DonationModel.findByIdAndUpdate(donationId,{status:1},{new:true});
+            let user = await User.findById(userId);
+            await User.findByIdAndUpdate(userId,{accepted:user.accepted+1});
             res.json({msg:"Donation accepted"})
         }catch(e){
             res.status(500).json({error:e.message})
@@ -194,13 +197,19 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
 
     NgoRouter.post('/api/declineDonation',async(req,res) => {
         try{
-            const {donationId}=req.body;
+            const {donationId,userId}=req.body;
+            console.log(req.body);
             let donation = await DonationModel.findByIdAndUpdate(donationId,{status:2},{new:true});
+            let user = await User.findById(userId);
+            console.log(user);
+            await User.findByIdAndUpdate(userId,{declined:user.declined+1});
             //console.log(donation);
             res.json({msg:"Donation declined"})
         }catch(e){
             res.status(500).json({error:e.message})
         }
     });
+
+    
 
 module.exports = NgoRouter;

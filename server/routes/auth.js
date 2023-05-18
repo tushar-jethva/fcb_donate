@@ -104,7 +104,7 @@ authRouter.get('/api/getUserData',Auth,async(req,res)=>{
 authRouter.get('/api/getTotalDonation', async(req,res)=> {
     const id = req.query.id;
     let user = await User.findById(id);
-    res.json({"totalDonation":user.totalDonation});
+    res.json(user);
 })
 
 authRouter.get('/api/getUserDonations', async(req,res) =>{

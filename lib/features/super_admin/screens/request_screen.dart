@@ -15,7 +15,7 @@ class RequestScreen extends StatefulWidget {
 }
 
 class _RequestScreenState extends State<RequestScreen> {
-  List<Ngo> tempNog = [];
+  List<Ngo>? tempNog;
   @override
   void initState() {
     // TODO: implement initState
@@ -42,22 +42,24 @@ class _RequestScreenState extends State<RequestScreen> {
         ),
       ),
       body: tempNog == null
-          ? const Loader()
+          ? const Loader(
+              isAdmin: true,
+            )
           : GridView.builder(
-              itemCount: tempNog.length,
+              itemCount: tempNog!.length,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, SuperDetails.routeName,
-                        arguments: {"ngo":tempNog[index],"isExist":false});
+                        arguments: {"ngo": tempNog![index], "isExist": false});
                   },
                   child: MySeeNGOCard(
-                      img: tempNog[index].ngo_photo,
-                      name: tempNog[index].ngo_name,
-                      area: tempNog[index].area,
-                      desc: tempNog[index].description),
+                      img: tempNog![index].ngo_photo,
+                      name: tempNog![index].ngo_name,
+                      area: tempNog![index].area,
+                      desc: tempNog![index].description),
                 );
               }),
     );

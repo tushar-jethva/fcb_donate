@@ -174,7 +174,7 @@ class _LoginState extends State<Login> {
                           Row(
                             children: [
                               const Text(
-                                "Not have an Account?",
+                                "Don't have an Account?",
                                 style: TextStyle(
                                     color: themeColor,
                                     fontWeight: FontWeight.w500),

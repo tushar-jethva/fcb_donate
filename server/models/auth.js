@@ -51,7 +51,8 @@ const UserModel = mongoose.Schema({
         default:0,
         type:Number,
         integer:true
-    }, declined:{
+    }, 
+    declined:{
         default:0,
         type:Number,
         integer:true

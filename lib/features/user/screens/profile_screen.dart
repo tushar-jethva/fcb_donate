@@ -26,11 +26,18 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   List<Donation> userDonations = [];
+
   @override
   void initState() {
     fetchUserDonation();
+    fetchTotalDonation();
     super.initState();
     // print(userDonations);
+  }
+
+  fetchTotalDonation() async {
+    await UserService().getTotalDonation(
+        Provider.of<UserProvider>(context, listen: false).user.id, context);
   }
 
   fetchUserDonation() async {
@@ -140,7 +147,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.arrow_back_ios_new)),
+                  icon: Icon(
+                    Icons.arrow_back_ios_new,
+                    color: themeColor,
+                  )),
               elevation: 0,
               backgroundColor: Colors.transparent,
               actions: [
@@ -148,7 +158,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       showdialog();
                     },
-                    icon: Icon(Icons.logout))
+                    icon: Icon(
+                      Icons.logout,
+                      color: themeColor,
+                    ))
               ],
             ),
           ),

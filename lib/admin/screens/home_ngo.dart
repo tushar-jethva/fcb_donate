@@ -52,6 +52,74 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
     }
   }
 
+  showdialogg() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("LogOut"),
+          content: Text(
+            "Are you sure to LogOut?",
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(15),
+                InkWell(
+                  onTap: () {
+                    //AuthServices().logOut(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, FirstScreen.routeName, (route) => false);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text("Yes",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: white)),
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(10)
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ngoProvider = Provider.of<NgoProvider>(context, listen: false).ngo;
@@ -84,12 +152,11 @@ class _MyHomeNgoAdminState extends State<MyHomeNgoAdmin> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, FirstScreen.routeName, (route) => false);
+                        showdialogg();
                       },
                       child: const MyContainerImage(
                         widget: Icon(
-                          Icons.login_rounded,
+                          Icons.logout,
                           color: themeColor,
                         ),
                       ),

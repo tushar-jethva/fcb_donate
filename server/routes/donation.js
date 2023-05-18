@@ -1,8 +1,5 @@
-
 const express = require("express");
-
 const DonationModel = require("../models/donation");
-
 const UserModel = require("../models/auth");
 const ReceiptModel = require("../models/receipt");
 const DonationRouter = express.Router();
@@ -29,11 +26,11 @@ DonationRouter.post("/api/postDonation",async(req,res) => {
             
         );
         donation =await donation.save();
-        
-        let user =await  UserModel.findByIdAndUpdate(userId,{totalDonation:user.totalDonation+1},{new:true});
+        let user1 = await UserModel.findById(userId);
+        let user =await  UserModel.findByIdAndUpdate(userId,{totalDonation:user1.totalDonation+1},{new:true});
         //  user.totalDonation =  user.totalDonation+1;
         //   user = await user.save();
-          console.log(user);
+        console.log(user);
         res.json(donation);
     }catch(e){
         res.status(500).json({error:e.message});
@@ -87,7 +84,6 @@ DonationRouter.post('/api/generateReceipt',async(req,res)=>{
         time,
         status
     });
-
     receipt = await receipt.save();
     res.json(receipt);  
 });
@@ -96,6 +92,12 @@ DonationRouter.get('/api/getAllReceipts',async(req,res)=>{
     const user_id = req.query.user_id;
     let receipts = await ReceiptModel.find({user_id});
     res.json(receipts);
-})
+});
 
+// DonationRouter.get('/api/getTotalDonation',async(req,res)=>{
+//     const id = req.query.id;
+//     let donation = await DonationModel.find({userId:id});
+//     console.log(donation);
+//     res.json({totalDonation:donation.length});
+// })
 module.exports = DonationRouter

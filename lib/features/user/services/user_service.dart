@@ -12,9 +12,13 @@ class UserService {
     final userPorovider = Provider.of<UserProvider>(context, listen: false);
     http.Response res = await http.get(
         Uri.parse("$url/api/getTotalDonation?id=$id"),
-        headers: {'Content-type': 'application/json;charset=UTF-8'});
+        headers: {'Content-type': 'application/json; charset=UTF-8'});
     int total = jsonDecode(res.body)['totalDonation'];
-    userPorovider.setUser(userPorovider.user.copyWith(totalDonation: total) as String);
+    print(jsonDecode(res.body));
+    print(jsonDecode(res.body)['totalDonation']);
+    
+    userPorovider
+        .setUser(res.body);
   }
 
   Future<List<Donation>> getUserDonations(String id) async {
@@ -53,8 +57,8 @@ class UserService {
           res: res,
           onSuccess: () {
             String profilePic = jsonDecode(res.body)['profilePic'];
-            userProvider
-                .setUser(userProvider.user.copyWith(profilePic: profilePic) as String);
+            userProvider.setUser(
+                userProvider.user.copyWith(profilePic: profilePic) as String);
           });
     } catch (e) {
       print(e.toString());

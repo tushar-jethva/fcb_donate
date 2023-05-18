@@ -64,13 +64,13 @@ class NgoServices {
   }
 
   Future<void> acceptDonation(
-      {required String donationId, required BuildContext context}) async {
+      {required String donationId,required String userId, required BuildContext context}) async {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/acceptDonation"),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode({'donationId': donationId}));
+          body: jsonEncode({'donationId': donationId,'userId':userId}));
       httpErrorHandling(
           res: res,
           onSuccess: () {
@@ -80,13 +80,13 @@ class NgoServices {
   }
 
   Future<void> declineDonation(
-      {required String donationId, required BuildContext context,required VoidCallback onSuccess}) async {
+      {required String donationId,required String userId, required BuildContext context,required VoidCallback onSuccess}) async {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/declineDonation"),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode({'donationId': donationId}));
+          body: jsonEncode({'donationId': donationId,'userId':userId}));
       httpErrorHandling(
           res: res,
           onSuccess: onSuccess);

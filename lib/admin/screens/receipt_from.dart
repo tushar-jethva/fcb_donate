@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fcb_donate/admin/services/ngo_services.dart';
+import 'package:fcb_donate/constants/all_constant.dart';
 import 'package:fcb_donate/features/ngo/service/ngo_service.dart';
 import 'package:fcb_donate/utils/loader.dart';
 import 'package:flutter/material.dart';
@@ -69,13 +70,15 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
   }
 
   final receiptKey = GlobalKey<FormState>();
-  callApis()  {
+  callApis() async {
     setState(() {
       isLoad = true;
     });
-     ngoServices.acceptDonation(
-        donationId: widget.donation.donationId, context: context);
-     ngoServices.uploadReceipt(
+    await ngoServices.acceptDonation(
+        userId: widget.donation.userId,
+        donationId: widget.donation.donationId,
+        context: context);
+    await ngoServices.uploadReceipt(
         context: context,
         userId: widget.donation.userId,
         name: widget.ngo.ngo_name,
@@ -86,14 +89,11 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
         onSuccess: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          
         });
     setState(() {
       isLoad = false;
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,10 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_new)),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: themeColor,
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -115,6 +118,26 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
             key: receiptKey,
             child: Column(
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.info,
+                      color: themeColor,
+                    ),
+                    const Gap(10),
+                    Flexible(
+                      child: Text(
+                        "In following receipt you have to specify Pick up date and Pick up time for when you pick up donation from Donor's house!",
+                        style: TextStyle(
+                          color: themeColor,
+                          fontSize: 15,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const Gap(20),
                 CustomRowReceipt(
                   left: "NGO Name",
                   right: widget.ngo.ngo_name,
@@ -134,43 +157,49 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
                     ),
                     const Gap(55),
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            isPicked
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Text(
-                                      date,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 112, 112, 112)),
+                      child: GestureDetector(
+                        onTap: () {
+                          pickDate();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 14, horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              isPicked
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      child: Text(
+                                        date,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 112, 112, 112)),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Text(
+                                        "Pick a Date",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 112, 112, 112),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  )
-                                : Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Text(
-                                      "Pick a Date",
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 112, 112, 112),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                            IconButton(
-                                onPressed: () {
-                                  pickDate();
-                                },
-                                icon: Icon(Icons.calendar_month))
-                          ],
+                              Icon(
+                                Icons.calendar_month,
+                                color: themeColor,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -188,43 +217,49 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
                     ),
                     const Gap(55),
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            isTimePicked
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Text(
-                                      time,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 112, 112, 112)),
+                      child: GestureDetector(
+                        onTap: () {
+                          pickTime();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 14, horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              isTimePicked
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Text(
+                                        time,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 112, 112, 112)),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Text(
+                                        "Pick a time",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 112, 112, 112),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  )
-                                : Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Text(
-                                      "Pick a time",
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 112, 112, 112),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                            IconButton(
-                                onPressed: () {
-                                  pickTime();
-                                },
-                                icon: Icon(Icons.access_time))
-                          ],
+                              Icon(
+                                Icons.access_time,
+                                color: themeColor,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -233,7 +268,14 @@ class _MyReceiptScreenState extends State<MyReceiptScreen> {
                 Gap(30),
                 InkWell(
                   onTap: () {
-                    callApis();
+                    if (date.isEmpty) {
+                      GlobalSnakbar()
+                          .showSnackbar("Please Enter pick up Date!");
+                    } else if (time.isEmpty) {
+                      GlobalSnakbar().showSnackbar("Please Enter Time!");
+                    } else {
+                      callApis();
+                    }
                   },
                   child: CustomButton(
                       widget: isLoad
