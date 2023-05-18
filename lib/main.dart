@@ -39,13 +39,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  AuthServices services = AuthServices();
-  @override
-  void initState() {
-    services.getUserData(context: context);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,14 +62,6 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.w400)),
       ),
       onGenerateRoute: (settings) => generateRoutes(settings),
-      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? Provider.of<UserProvider>(context).user.type == 'admin'
-      //         ? const MyHomeNgoAdmin()
-      //         : Provider.of<UserProvider>(context).user.type == 'user'
-      //             ? const MyHomeNgoAdmin()
-      //             : const SuperAdminScreen()
-      //     : const SignUp()
-
       home: const SplashScreen(),
     );
   }
