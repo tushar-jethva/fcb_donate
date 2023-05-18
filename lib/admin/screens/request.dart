@@ -65,7 +65,7 @@ class _MyRequestPageState extends State<MyRequestPage> {
                       },
                       child: MyRequestCard(
                         donorName: list[index].userName,
-                        mobile_no: list[index].address,
+                        mobile_no: list[index].mobile1,
                         address: list[index].address,
                       ),
                     ),

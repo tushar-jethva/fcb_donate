@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:fcb_donate/models/donation.dart';
 import 'package:fcb_donate/models/receipt_model.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
 import '../../../constants/all_constant.dart';
 
 class UserService {
@@ -16,7 +14,7 @@ class UserService {
         Uri.parse("$url/api/getTotalDonation?id=$id"),
         headers: {'Content-type': 'application/json;charset=UTF-8'});
     int total = jsonDecode(res.body)['totalDonation'];
-    userPorovider.setUser(userPorovider.user.copyWith(totalDonation: total));
+    userPorovider.setUser(userPorovider.user.copyWith(totalDonation: total) as String);
   }
 
   Future<List<Donation>> getUserDonations(String id) async {
@@ -56,7 +54,7 @@ class UserService {
           onSuccess: () {
             String profilePic = jsonDecode(res.body)['profilePic'];
             userProvider
-                .setUser(userProvider.user.copyWith(profilePic: profilePic));
+                .setUser(userProvider.user.copyWith(profilePic: profilePic) as String);
           });
     } catch (e) {
       print(e.toString());

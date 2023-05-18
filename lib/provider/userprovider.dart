@@ -17,8 +17,8 @@ class UserProvider with ChangeNotifier {
       profilePic: '',
       totalDonation: 0);
   User get user => _user;
-  void setUser(User newuser) {
-    _user = newuser;
+  void setUser(String user) {
+    _user = User.fromJson(user);
     notifyListeners();
   }
 }

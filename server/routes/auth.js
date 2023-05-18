@@ -97,6 +97,7 @@ authRouter.get('/api/getUserData',Auth,async(req,res)=>{
     const token = req.header("x-auth-token");
     console.log(token);
     const user = await User.findById(req.id);
+    console.log(user);
     res.json({...user._doc,token});
 });
 

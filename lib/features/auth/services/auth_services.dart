@@ -49,26 +49,24 @@ class AuthServices {
     try {
       http.Response res = await http.post(Uri.parse("$url/api/auth/SignIn"),
           body: jsonEncode({'email': email, 'password': password}),
-          headers: {'Content-Type': 'application/json;charset=UTF-8'});
+          headers: {'Content-Type': 'application/json; charset=UTF-8'});
 
       // ignore: use_build_context_synchronously
       httpErrorHandling(
         res: res,
         onSuccess: () async {
           SharedPreferences pref = await SharedPreferences.getInstance();
-          pref.setString('x-auth-token', jsonDecode(res.body)['token']);
-          var userProvider =
-              // ignore: use_build_context_synchronously
-              Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUser(User.fromMap(jsonDecode(res.body)));
+          print(res.body);
+          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          await pref.setString('x-auth-token', jsonDecode(res.body)['token']);
+
           // ignore: use_build_context_synchronously
-          var map = jsonDecode(res.body);
-          userProvider.user.type == 'user'
-              ?  Navigator.pushNamedAndRemoveUntil(
+
+          Provider.of<UserProvider>(context, listen: false).user.type == 'user'
+              ? Navigator.pushNamedAndRemoveUntil(
                   context, HomeScreen.routeName, (route) => false)
-              :Navigator.pushNamedAndRemoveUntil(
+              : Navigator.pushNamedAndRemoveUntil(
                   context, SuperAdminScreen.routeName, (route) => false);
-              
         },
       );
     } catch (e) {
@@ -76,7 +74,7 @@ class AuthServices {
     }
   }
 
-  getUserData({required BuildContext context}) async {
+  void getUserData({required BuildContext context}) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString('x-auth-token');
@@ -87,31 +85,22 @@ class AuthServices {
       http.Response res = await http.get(
         Uri.parse("$url/api/isValidToken"),
         headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
           'x-auth-token': token!,
-          'Content-Type': 'application/json;charset=UTF-8'
         },
       );
-      print(res.body);
-      // ignore: use_build_context_synchronously
-      httpErrorHandling(
-          res: res,
-          onSuccess: () async {
-            if (jsonDecode(res.body) == true) {
-              http.Response userRes = await http.get(
-                Uri.parse("$url/api/getUserData"),
-                headers: {
-                  'x-auth-token': token,
-                  'Content-Type': 'application/json;charset=UTF-8'
-                },
-              );
-              var userProvider =
+      var response = jsonDecode(res.body);
+      if (response == true) {
+        http.Response userRes = await http
+            .get(Uri.parse('$url/api/getUserData'), headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token
+        });
 
-                  // ignore: use_build_context_synchronously
-                  Provider.of<UserProvider>(context, listen: false);
-
-              userProvider.setUser(User.fromMap(jsonDecode(userRes.body)));
-            }
-          });
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+        print(jsonDecode(userRes.body)['token']);
+      }
     } catch (e) {
       GlobalSnakbar().showSnackbar(e.toString());
     }

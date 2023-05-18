@@ -21,12 +21,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  AuthServices services = AuthServices();
+  final AuthServices services = AuthServices();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     services.getUserData(context: context);
+    setState(() {
+      
+    });
     Timer(Duration(seconds: 3), () {
       print("another");
       another();
@@ -35,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void another() {
     var p = Provider.of<UserProvider>(context, listen: false).user;
-    print("token is $p");
+    print("token is ${p.token}");
     print("user is ${p.type}");
     Provider.of<UserProvider>(context, listen: false).user.token.isNotEmpty
         ? Provider.of<UserProvider>(context, listen: false).user.type == 'user'
