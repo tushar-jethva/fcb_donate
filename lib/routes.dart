@@ -5,12 +5,14 @@ import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
 import 'package:fcb_donate/features/ngo/screen/donation_form.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
+import 'package:fcb_donate/features/super_admin/screens/bottombar.dart';
 import 'package:fcb_donate/features/super_admin/screens/details.dart';
 import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:fcb_donate/features/user/screens/notification_screen.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
+import 'package:fcb_donate/features/user/screens/search_screen.dart';
 import 'package:fcb_donate/models/donation.dart';
 import 'package:flutter/material.dart';
 
@@ -59,10 +61,11 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
       return MaterialPageRoute(
           builder: (_) => const ProfileScreen(), settings: routeSettings);
     case NgoDetailScreen.routeName:
-      Ngo ngo = routeSettings.arguments as Ngo;
+      Map<String, dynamic> map =
+          routeSettings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
           builder: (_) => NgoDetailScreen(
-                ngo: ngo,
+                map: map,
               ),
           settings: routeSettings);
 
@@ -116,10 +119,18 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     case MyNotificationScreen.routeName:
       return MaterialPageRoute(
           builder: (_) => MyNotificationScreen(), settings: routeSettings);
-    
+
     case SuperAdminScreen.routeName:
       return MaterialPageRoute(
           builder: (_) => const SuperAdminScreen(), settings: routeSettings);
+    case MySuperBottomBar.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const MySuperBottomBar(), settings: routeSettings);
+    case SearchResultScreen.routeName:
+      String name = routeSettings.arguments as String;
+      return MaterialPageRoute(
+          builder: (_) => SearchResultScreen(name: name),
+          settings: routeSettings);
 
     default:
       return MaterialPageRoute(

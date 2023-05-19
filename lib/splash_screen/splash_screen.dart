@@ -27,10 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     services.getUserData(context: context);
-    setState(() {
-      
-    });
-    Timer(Duration(seconds: 3), () {
+    setState(() {});
+    Timer(Duration(seconds: 5), () {
       print("another");
       another();
     });

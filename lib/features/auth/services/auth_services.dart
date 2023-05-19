@@ -3,6 +3,7 @@ import 'package:fcb_donate/admin/bottombar.dart';
 import 'package:fcb_donate/admin/screens/home_ngo.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/screens/signup_screen.dart';
+import 'package:fcb_donate/features/super_admin/screens/bottombar.dart';
 import 'package:fcb_donate/features/super_admin/screens/details.dart';
 import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
@@ -37,9 +38,7 @@ class AuthServices {
           onSuccess: () {
             GlobalSnakbar().showSnackbar("Sign up Successfully");
           });
-    } catch (e) {
-      GlobalSnakbar().showSnackbar(e.toString());
-    }
+    } catch (e) {}
   }
 
   signInUser(
@@ -66,15 +65,14 @@ class AuthServices {
               ? Navigator.pushNamedAndRemoveUntil(
                   context, HomeScreen.routeName, (route) => false)
               : Navigator.pushNamedAndRemoveUntil(
-                  context, SuperAdminScreen.routeName, (route) => false);
+                  context, MySuperBottomBar.routeName, (route) => false);
         },
       );
-    } catch (e) {
-      GlobalSnakbar().showSnackbar(e.toString());
-    }
+    } catch (e) {}
   }
 
-  void getUserData({required BuildContext context}) async {
+   void getUserData({required BuildContext context}) async {
+    String t = "";
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString('x-auth-token');
@@ -100,10 +98,10 @@ class AuthServices {
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
         print(jsonDecode(userRes.body)['token']);
+        t = jsonDecode(userRes.body)['token'];
       }
-    } catch (e) {
-      GlobalSnakbar().showSnackbar(e.toString());
-    }
+    } catch (e) {}
+    
   }
 
   void logOut(BuildContext context) async {

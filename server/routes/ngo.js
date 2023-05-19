@@ -210,6 +210,17 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
         }
     });
 
-    
+    NgoRouter.get('/api/searchNgo',async(req,res)=>{
+        try{
+            const ngos = await NGOModel.find({
+                ngo_name:{$regex: req.query.name, $options: 'i'},
+            });
+            res.json(ngos);
+        }catch(e){
+            res.status(500).json({error:e.message})
+     
+        }
+
+    })
 
 module.exports = NgoRouter;

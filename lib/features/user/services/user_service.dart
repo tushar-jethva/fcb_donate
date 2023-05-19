@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fcb_donate/models/donation.dart';
+import 'package:fcb_donate/models/ngo.dart';
 import 'package:fcb_donate/models/receipt_model.dart';
 import 'package:fcb_donate/provider/userprovider.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,8 @@ class UserService {
     int total = jsonDecode(res.body)['totalDonation'];
     print(jsonDecode(res.body));
     print(jsonDecode(res.body)['totalDonation']);
-    
-    userPorovider
-        .setUser(res.body);
+
+    userPorovider.setUser(res.body);
   }
 
   Future<List<Donation>> getUserDonations(String id) async {
@@ -91,6 +91,32 @@ class UserService {
           });
     } catch (e) {
       print(e.toString());
+    }
+    return list;
+  }
+
+  Future<List<Ngo>> searchNgo({required String name}) async {
+    List<Ngo> list = [];
+    try {
+      http.Response res = await http.get(
+          Uri.parse("$url/api/searchNgo?name=$name"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          });
+      print(res.body);
+      httpErrorHandling(
+          res: res,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(res.body).length; i++) {
+              list.add(
+                Ngo.fromJson(
+                  jsonEncode(jsonDecode(res.body)[i]),
+                ),
+              );
+            }
+          });
+    } catch (e) {
+      GlobalSnakbar().showSnackbar(e.toString());
     }
     return list;
   }

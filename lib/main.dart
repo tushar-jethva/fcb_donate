@@ -19,9 +19,8 @@ import 'features/user/screens/home_screen.dart';
 
 void main() {
   //hi i am tushargit bra
-  
-  runApp(
-    MultiProvider(
+
+  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NgoProvider()),
       ChangeNotifierProvider(create: (_) => UserProvider())
@@ -63,6 +62,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (settings) => generateRoutes(settings),
       home: const SplashScreen(),
+     
     );
   }
 }

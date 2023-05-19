@@ -1,6 +1,8 @@
+import 'package:fcb_donate/constants/all_constant.dart';
 import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/user/screens/notification_screen.dart';
 import 'package:fcb_donate/features/user/screens/profile_screen.dart';
+import 'package:fcb_donate/features/user/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
@@ -160,17 +162,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             blurRadius: 0.01)
                       ]),
                   child: TextField(
+                    cursorColor: themeColor,
+                    onSubmitted: (value) {
+                      if (value.isNotEmpty) {
+                        Navigator.pushNamed(
+                            context, SearchResultScreen.routeName,
+                            arguments: value.toString());
+                      } else {
+                        GlobalSnakbar().showSnackbar("Enter search query");
+                      }
+                    },
                     controller: _searchController,
                     style: const TextStyle(color: Colors.black87),
                     decoration: const InputDecoration(
-                        icon: Icon(Icons.search),
-                        iconColor: themeColor,
-                        border: InputBorder.none,
-                        hintText: "Search NGO's...",
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500)),
+                      icon: Icon(Icons.search),
+                      iconColor: themeColor,
+                      border: InputBorder.none,
+                      hintText: "Search NGO's...",
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),

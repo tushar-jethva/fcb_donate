@@ -1,3 +1,4 @@
+import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 import 'package:fcb_donate/features/super_admin/screens/details.dart';
@@ -8,6 +9,7 @@ import 'package:fcb_donate/utils/loader.dart';
 import 'package:fcb_donate/utils/ngo_card.dart';
 import 'package:fcb_donate/utils/see_ngo.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import '../../../models/ngo.dart';
 
 class SuperAdminScreen extends StatefulWidget {
@@ -32,6 +34,73 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
     setState(() {});
   }
 
+  showdialogg() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("LogOut"),
+          content: Text(
+            "Are you sure to LogOut?",
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          "Cancle",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(15),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, FirstScreen.routeName, (route) => false);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text("Yes",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: white)),
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(10)
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +114,9 @@ class _SuperAdminScreenState extends State<SuperAdminScreen> {
               .copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
         ),
         actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RequestScreen.routeName);
-              },
-              child: Text("Request")),
           IconButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, FirstScreen.routeName, (route) => false);
+                showdialogg();
               },
               icon: Icon(Icons.logout)),
         ],

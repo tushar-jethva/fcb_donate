@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fcb_donate/constants/all_constant.dart';
 import 'package:fcb_donate/constants/colors.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
@@ -280,8 +281,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         crossAxisSpacing: 5,
                                         crossAxisCount: 3),
                                 itemBuilder: (context, index) {
-                                  return Image.network(
-                                    userDonations[index].images[0],
+                                  return CachedNetworkImage(
+                                    imageUrl:userDonations[index].images[0],
                                     fit: BoxFit.cover,
                                   );
                                 },
@@ -300,7 +301,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ? CircleAvatar(
                           radius: 60,
                           backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(user.profilePic))
+                          backgroundImage: CachedNetworkImageProvider(user.profilePic))
                       : CircleAvatar(
                           radius: 60,
                           backgroundColor: Colors.white,

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class NgoDetailsCard extends StatelessWidget {
       width: size.width * 0.40,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          image: DecorationImage(image: NetworkImage(img), fit: BoxFit.cover),
+          image: DecorationImage(image: CachedNetworkImageProvider(img), fit: BoxFit.cover),
           color: Color.fromARGB(255, 226, 177, 0)),
       child: Container(
         decoration: BoxDecoration(
