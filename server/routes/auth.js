@@ -31,7 +31,7 @@ authRouter.post('/api/auth/signUp',async(req,res)=>{
         if(existUser){
             return res.status(400).json({msg:"User with this email already exist!"});
         }
-    console.log(email);
+        //console.log(email);
         const hashedPassword = await bjs.hash(password,8);
         let user = new User({
             name,
@@ -95,9 +95,9 @@ authRouter.get('/api/isValidToken',async(req,res)=>{
 
 authRouter.get('/api/getUserData',Auth,async(req,res)=>{
     const token = req.header("x-auth-token");
-    console.log(token);
+    //console.log(token);
     const user = await User.findById(req.id);
-    console.log(user);
+    //console.log(user);
     res.json({...user._doc,token});
 });
 

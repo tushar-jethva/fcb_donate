@@ -7,7 +7,7 @@ const  DonationModel = require('../models/donation');
 NgoRouter.post("/api/addNgo",async(req,res)=>{
     try{
         const{id} = req.body;  
-        console.log(req.body);
+        //console.log(req.body);
         let isExist = await TempNGOModel.findById(id);
         if(!isExist){
             return res.status(400).json({msg:"No Ngo is found!"});
@@ -198,10 +198,10 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
     NgoRouter.post('/api/declineDonation',async(req,res) => {
         try{
             const {donationId,userId}=req.body;
-            console.log(req.body);
+            //console.log(req.body);
             let donation = await DonationModel.findByIdAndUpdate(donationId,{status:2},{new:true});
             let user = await User.findById(userId);
-            console.log(user);
+            //console.log(user);
             await User.findByIdAndUpdate(userId,{declined:user.declined+1});
             //console.log(donation);
             res.json({msg:"Donation declined"})
