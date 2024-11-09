@@ -1,5 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
+
 
 const PORT = 3000;
 const DB = "mongodb+srv://tushar_023:JETHvA%409999@ncbdonate.2gwhl0z.mongodb.net/test";
@@ -12,6 +16,8 @@ app.use(express.json());
 app.use(authRouter);
 app.use(ngoRouter);
 app.use(DonationRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.get('/',(req,res)=>{
     res.send("Welcome to FCB Donation!");

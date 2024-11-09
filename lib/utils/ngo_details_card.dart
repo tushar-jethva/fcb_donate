@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fcb_donate/admin/widgets/accept_card.dart';
 import 'package:fcb_donate/features/ngo/screen/ngo_detials.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class NgoDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

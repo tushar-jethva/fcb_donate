@@ -57,7 +57,6 @@ const UserModel = mongoose.Schema({
         type:Number,
         integer:true
     },
-    
     type:{
         default:"user",
         type:String,

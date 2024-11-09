@@ -27,13 +27,11 @@ class _MyRequestPageState extends State<MyRequestPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     getDonorDetails();
   }
 
   void getDonorDetails() async {
     var provider = Provider.of<NgoProvider>(context, listen: false).ngo;
-
     list = await ngoServices.getDonorsDetails(id: provider.id);
     setState(() {});
   }

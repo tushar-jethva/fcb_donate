@@ -3,14 +3,11 @@ import 'dart:async';
 import 'package:fcb_donate/features/auth/screens/first_screen.dart';
 import 'package:fcb_donate/features/auth/services/auth_services.dart';
 import 'package:fcb_donate/features/super_admin/screens/bottombar.dart';
-import 'package:fcb_donate/features/super_admin/screens/details.dart';
-import 'package:fcb_donate/features/super_admin/screens/super_admin_screen.dart';
 import 'package:fcb_donate/features/user/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../admin/screens/home_ngo.dart';
 import '../provider/userprovider.dart';
 import '../utils/loader.dart';
 

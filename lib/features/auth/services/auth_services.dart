@@ -71,7 +71,7 @@ class AuthServices {
     } catch (e) {}
   }
 
-   void getUserData({required BuildContext context}) async {
+  void getUserData({required BuildContext context}) async {
     String t = "";
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();

@@ -29,6 +29,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     super.initState();
     getAllSearchProduct();
   }
+  
 
   List<Ngo>? list;
   getAllSearchProduct() async {

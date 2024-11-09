@@ -242,9 +242,9 @@ class _MySuperFormState extends State<MySuperForm> {
 
                             Ngo model = Ngo(
                                 books: book ? 1 : 0,
-                                clothes: book ? 1 : 0,
-                                food: book ? 1 : 0,
-                                money: book ? 1 : 0,
+                                clothes: clothes ? 1 : 0,
+                                food: food ? 1 : 0,
+                                money: money ? 1 : 0,
                                 id: " ",
                                 password: " ",
                                 username: " ",

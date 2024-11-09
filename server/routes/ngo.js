@@ -218,9 +218,8 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
             res.json(ngos);
         }catch(e){
             res.status(500).json({error:e.message})
-     
+    
         }
-
     })
 
 module.exports = NgoRouter;

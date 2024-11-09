@@ -232,13 +232,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      "See All",
-                      style: TextStyle(
-                          color: themeColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    // Text(
+                    //   "See All",
+                    //   style: TextStyle(
+                    //       color: themeColor,
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500),
+                    // ),
                   ],
                 ),
               ),
