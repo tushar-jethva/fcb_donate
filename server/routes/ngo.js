@@ -155,8 +155,12 @@ NgoRouter.get("/api/getAllTempNgo",async (req,res) => {
 
 NgoRouter.get("/api/getAllNgo",async(req,res) => {
     try{
-        let allNgos = await NGOModel.find({});
-    res.json(allNgos);
+        const allNgos = await NGOModel.find({});
+        const response = {
+            status: "success",
+            data: allNgos
+        };
+        res.json(response);
     }
     catch(e){
         res.status(500).json({err:e.message});
@@ -220,6 +224,23 @@ NgoRouter.get("/api/getAllNgo",async(req,res) => {
             res.status(500).json({error:e.message})
     
         }
-    })
+    });
+
+    NgoRouter.get("/b/calculate_cost/apply-coupon", async (req, res) => {
+        const { coupon_code } = req.query;
+        
+        // Placeholder logic for coupon check (replace with actual logic)
+        if (!coupon_code) {
+          return res.status(400).json({ error: "Invalid coupon code provided" });
+        }
+      
+        const couponData = {
+          valid: true,
+          discount: 10, // Example discount value
+        };
+      
+        return res.status(200).json(couponData);
+      });
+      
 
 module.exports = NgoRouter;
